@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": null,
-    "database": "exampledb",
+    "password": "RootRoot22",
+    "database": "main_wine",
     "host": "localhost",
     "dialect": "mysql"
   },
