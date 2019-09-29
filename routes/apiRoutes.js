@@ -8,9 +8,9 @@ var db = require("../models");
 module.exports = function(app) {
   // Get all examples
   app.get("/api/maininventory", function(req, res) {
-    db.mainInventory.findAll({}).then(function(results) {
-      console.log(results)
-      res.json(results);
+    db.mainInventory.findAll({}).then(function(answer) {
+      console.log(answer)
+      res.json(answer);
     });
   });
 
