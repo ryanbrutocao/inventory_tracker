@@ -1,16 +1,10 @@
-// var customerInfo = require("../models/customerInfo.js");
-// var mainInventory = require("../models/main_inventory.js")
-// var orders = require("../models/orders.js")
-
 var db = require("../models");
-
 
 module.exports = function(app) {
   // Get all examples
   app.get("/api/maininventory", function(req, res) {
-    db.mainInventory.findAll({}).then(function(answer) {
-      console.log(answer)
-      res.json(answer);
+    db.mainInventory.findAll({}).then(function(results) {
+      res.json(results);
     });
   });
 

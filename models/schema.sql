@@ -15,6 +15,7 @@ CREATE TABLE mainInventory (
 );
 
 CREATE TABLE customerInfo (
+	id int NOT NULL AUTO_INCREMENT,
 	clientName VARCHAR(100) NOT NULL,
 	primaryContact VARCHAR(100) NOT NULL,
 	phone VARCHAR(100) NOT NULL,
@@ -22,7 +23,10 @@ CREATE TABLE customerInfo (
 	streetAddress VARCHAR(100) NOT NULL,
 	city VARCHAR(100) NOT NULL,
 	ST VARCHAR(2) NOT NULL,
-	zipcode VARCHAR(5) NOT NULL
+	zipcode VARCHAR(5) NOT NULL,
+	updatedAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
+    createdAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE orders (
