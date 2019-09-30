@@ -2,10 +2,21 @@ var db = require("../models");
 
 module.exports = function(app) {
   // Get all examples
-  app.get("/api/examples", function(req, res) {
-    db.main_inventory.findAll({}).then(function(dbExamples) {
-      console.log(dbExamples);
-      res.json(dbExamples);
+  app.get("/api/maininventory", function(req, res) {
+    db.mainInventory.findAll({}).then(function(results) {
+      res.json(results);
+    });
+  });
+
+  app.get("/api/customerinfo", function(req, res) {
+    db.customerInfo.findAll({}).then(function(results) {
+      res.json(results);
+    });
+  });
+
+  app.get("/api/orders", function(req, res) {
+    db.orders.findAll({}).then(function(results) {
+      res.json(results);
     });
   });
 

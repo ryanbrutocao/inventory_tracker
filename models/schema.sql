@@ -1,23 +1,46 @@
 DROP DATABASE IF EXISTS main_wine;
 CREATE DATABASE main_wine;
 USE main_wine;
-CREATE TABLE main_inventory
-(
+
+
+CREATE TABLE mainInventory (
 	id int NOT NULL AUTO_INCREMENT,
-customer_name varchar(255) NOT NULL,
-varietal varchar(100) NOT NULL,
-actual_ordered varchar(255) NOT NULL,
-promised varchar(100) NOT NULL,
-box_1_promised integer(10) NOT NULL,
-box_2_promised integer(10) NOT NULL,
-box_3_promised integer(10) NOT NULL,
-box_1_actual integer(10) NOT NULL,
-box_2_actual integer(10) NOT NULL,
-box_3_actual integer(10) NOT NULL,
-label_count integer(10) NOT NULL,
-date_ordered datetime NOT NULL,
-notes varchar(1000) NOT NULL,
+	wine VARCHAR(100) NOT NULL,
+	actualInventory INTEGER(5) NOT NULL,
+	shadowInventory INTEGER(5) NOT NULL,
+	boxType INTEGER(2) NOT NULL,
+	updatedAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
+    createdAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
 	PRIMARY KEY (id)
 );
-INSERT INTO main_inventory (customer_name, varietal, actual_ordered, promised, box_1_promised, box_2_promised, box_3_promised, box_1_actual, box_2_actual, box_3_actual, label_count, date_ordered, notes) VALUES ('Melissa', 'Pinot Noir', '100', '300', '30', '30', '30', '20', '20', '20', '400', '01/10/19', 'these are my notes' );
 
+CREATE TABLE customerInfo (
+	id int NOT NULL AUTO_INCREMENT,
+	clientName VARCHAR(100) NOT NULL,
+	primaryContact VARCHAR(100) NOT NULL,
+	phone VARCHAR(100) NOT NULL,
+	email VARCHAR(100) NOT NULL,
+	streetAddress VARCHAR(100) NOT NULL,
+	city VARCHAR(100) NOT NULL,
+	ST VARCHAR(2) NOT NULL,
+	zipcode VARCHAR(5) NOT NULL,
+	updatedAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
+    createdAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE orders (
+	id int NOT NULL AUTO_INCREMENT,
+	accountName VARCHAR(100) NOT NULL,
+	wine VARCHAR(100) NOT NULL,
+	actualOrdered INTEGER(5),
+	promised INTEGER(5),
+	boxTypeOne INTEGER(5),
+	boxTypeTwo INTEGER(5),
+	boxTypeThree INTEGER(5),
+	labelsLeft INTEGER(5),
+	notes VARCHAR(200),
+	updatedAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
+    createdAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
+	PRIMARY KEY (id)
+);
