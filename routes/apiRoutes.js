@@ -66,7 +66,7 @@ module.exports = function(app) {
       res.json(results);
     });
   });
-  //////////////////////////////UPDATE ROUTES///////////////////////////////////////////////
+  //////////////////////////////UPDATE ROUTES(all currently working)///////////////////////////////////////////////
   // Update customerInfo
   app.put("/api/customerinfo", function(req, res) {
     db.customerInfo.update(req.body,
