@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
     boxTypeOne: DataTypes.INTEGER,
     boxTypeTwo: DataTypes.INTEGER,
     boxTypeThree: DataTypes.INTEGER,
-    labelsLeft: DataTypes.INTEGER,
+    // labelsLeft: DataTypes.INTEGER,
     notes: DataTypes.TEXT,
     createdAt: {
       field: "createdAt",

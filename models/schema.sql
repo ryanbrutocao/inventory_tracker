@@ -5,7 +5,7 @@ USE main_wine;
 
 CREATE TABLE mainInventory (
 	id int NOT NULL AUTO_INCREMENT,
-	wine VARCHAR(100) NOT NULL,
+	item VARCHAR(100) NOT NULL,
 	actualInventory INTEGER(5) NOT NULL,
 	shadowInventory INTEGER(5) NOT NULL,
 	boxType INTEGER(2) NOT NULL,
@@ -38,8 +38,18 @@ CREATE TABLE orders (
 	boxTypeOne INTEGER(5),
 	boxTypeTwo INTEGER(5),
 	boxTypeThree INTEGER(5),
-	labelsLeft INTEGER(5),
+	-- labelsLeft INTEGER(5),
 	notes VARCHAR(200),
+	updatedAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
+    createdAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE labels (
+	id int NOT NULL AUTO_INCREMENT,
+	accountName VARCHAR(100) NOT NULL,
+	wine VARCHAR(100) NOT NULL,
+	labelsLeft INTEGER(5),
 	updatedAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
     createdAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
 	PRIMARY KEY (id)
