@@ -29,6 +29,15 @@ module.exports = function(app) {
     });
   });
 
+  app.get("/customerView", function(req, res) {
+    db.orders.findAll({}).then(function(results) {
+      console.log(results);
+     
+  res.render("customerView", {results: results} )
+    });
+  });
+
+
   app.get("/pizza", function(req, res) {
     db.mainInventory.findOne({}).then(function(results) {
       console.log(results);
