@@ -7,7 +7,7 @@ module.exports = function(app) {
     db.mainInventory.findAll({}).then(function(results) {
       console.log(results);
       // console.log("this worked");
-      res.render("layouts/main", {results: results});
+      res.render("homePage", {results: results});
 
     });
   });
