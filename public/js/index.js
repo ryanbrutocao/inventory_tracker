@@ -4,6 +4,12 @@ var $exampleDescription = $("#example-description");
 var $submitBtn = $("#submit");
 var $exampleList = $("#example-list");
 
+function callthis() {
+  console.log("calling /public/js/index.js and connected");
+}
+callthis();
+
+
 // The API object contains methods for each kind of request we'll make
 var API = {
   saveExample: function(example) {
@@ -19,6 +25,12 @@ var API = {
   getExamples: function() {
     return $.ajax({
       url: "api/examples",
+      type: "GET"
+    });
+  },
+  getRyan: function() {
+    return $.ajax({
+      url: "api/customerinfo",
       type: "GET"
     });
   },
@@ -97,3 +109,18 @@ var handleDeleteBtnClick = function() {
 // Add event listeners to the submit and delete buttons
 $submitBtn.on("click", handleFormSubmit);
 $exampleList.on("click", ".delete", handleDeleteBtnClick);
+
+
+
+$("#addItem").on("click", function(event) {
+  event.preventDefault();
+  console.log("working");
+var newItem = $("#newItem").val();
+  var card = $("<li>").addClass("card");
+  var cardSpan = $("<span>").addClass("item-check")
+  var textSpan = $("<span>").addClass("item-text")
+   $(textSpan).append(newItem)
+  var itemRemove = $("<span>").addClass("item-remove")
+  var itemHtml = $(card).append(cardSpan, textSpan, itemRemove);
+
+});

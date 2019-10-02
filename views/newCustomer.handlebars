@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="row">
+    <div class="col-8 offset-2">
+      <div class="card mt-4">
+        <div class="card-body">
+          <h5 class="card-title">Add a new customer</h5>
+
+          {{!-- <form action="/action_page.php"></form> This is what to use if I want to send the data to a page--}}
+          <div class="newClientInput">
+            Client Name:<br>
+            <input type="text" id="clientName" value="">
+            <br>
+            Primary Contact:<br>
+            <input type="text" id="primaryContact" value="">
+            <br>
+            Phone Number:<br>
+            <input type="text" id="phoneNumber" value="">
+            <br>
+            E-mail Address:<br>
+            <input type="text" id="emailAddress" value="">
+            <br>
+            Street:<br>
+            <input type="text" id="street" value="">
+            <br>
+            City:<br>
+            <input type="text" id="city" value="">
+            <br>
+            State:<br>
+            <input type="text" id="state" value="">
+            <br>
+            Zip Code:<br>
+            <input type="text" id="zipCode" value="">
+            <br>
+            <input type="submit" value="Submit" id="newClientSubmit">
+          </div>
+
+          Notes: :add a notes connection here...
+
+
+          <a href="/">← Back To Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+
+  $(document).ready(function () {
+
+    $("#newClientSubmit").on("click", function (event) {
+      event.preventDefault();
+      var clientName = $("#clientName").val();
+      var primaryContact = $("#primaryContact").val();
+      var phoneNumber = $("#phoneNumber").val();
+      var emailAddress = $("#emailAddress").val();
+      var street = $("#street").val();
+      var city = $("#city").val();
+      var state = $("#state").val();
+      var zipCode = $("#zipCode").val();
+
+       var customerInfo = {
+          "clientName": clientName,
+          "primaryContact": primaryContact,
+          "phone": phoneNumber,
+          "email": emailAddress,
+          "streetAddress": street,
+          "city": city,
+          "ST": state,
+          "zipcode": zipCode
+         }
+         console.log("customerInfo object:", customerInfo)
+     $.ajax({
+      type: 'POST',
+      url: 'http://localhost:3000/api/newCustomer',
+      data: customerInfo,
+      success: function (data) {
+        console.log(data);
+        console.log("You successfully posted")
+      }
+
+    });
+
+    });
+  })
+
+
+
+</script>
