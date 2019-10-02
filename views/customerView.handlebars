@@ -1,15 +1,123 @@
+<button id="addNewCustomer" data-val="off">Add New Customer</button>
+</span>
+<div id="newClientInput" style="display:none;">
+  Client Name:<br>
+  <input type="text" id="clientName" value="">
+  <br>
+  Primary Contact:<br>
+  <input type="text" id="primaryContact" value="">
+  <br>
+  Phone Number:<br>
+  <input type="text" id="phoneNumber" value="">
+  <br>
+  E-mail Address:<br>
+  <input type="text" id="emailAddress" value="">
+  <br>
+  Street:<br>
+  <input type="text" id="street" value="">
+  <br>
+  City:<br>
+  <input type="text" id="city" value="">
+  <br>
+  State:<br>
+  <input type="text" id="state" value="">
+  <br>
+  Zip Code:<br>
+  <input type="text" id="zipCode" value="">
+  <br>
+  <input type="submit" value="Submit" id="newClientSubmit">
+  <button id="nevermind">Nevermind!</button>
+</div>
+<span>
+
+
+
+  <div class="jumbotron">
+    <h1><span class="customerName">Choose Customer</span></h1> <br>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="customerNames">Clients</label>
+      </div>
+      <select class="custom-select" id="customerNames">
+
+        <option selected> Select ...</option>
+
+      </select>
+    </div>
+
+  </div>
 
 
 
 
-choose a customer to view
+  <script>
+    $(document).ready(function () {
+
+      //toggle on and off the 'add client' box
+
+      $("#nevermind").click(function () {
+        $("#newClientInput").hide();
+      });
+      $("#addNewCustomer").click(function () {
+        $("#newClientInput").show();
+      });
 
 
+      //populates the customer dropdown
+      $.ajax({
+        type: 'GET',
+        url: 'http://localhost:3000/api/allCustomers',
 
+        success: function (data) {
+          for (i = 0; i < data.length; i++) {
+            console.log(data[i].clientName)
+            var custName = data[i].clientName;
+            var dropOption = "<option value=" + custName + ">" + custName + "</option>";
 
+            $("#customerNames").append(dropOption)
+          }
 
+        }
+      });
 
+      //add a new client
+      $("#newClientSubmit").on("click", function (event) {
+        event.preventDefault();
+        var clientName = $("#clientName").val();
+        var primaryContact = $("#primaryContact").val();
+        var phoneNumber = $("#phoneNumber").val();
+        var emailAddress = $("#emailAddress").val();
+        var street = $("#street").val();
+        var city = $("#city").val();
+        var state = $("#state").val();
+        var zipCode = $("#zipCode").val();
 
+        var customerInfo = {
+          "clientName": clientName,
+          "primaryContact": primaryContact,
+          "phone": phoneNumber,
+          "email": emailAddress,
+          "streetAddress": street,
+          "city": city,
+          "ST": state,
+          "zipcode": zipCode
+        }
+        console.log("customerInfo object:", customerInfo)
+        $.ajax({
+          type: 'POST',
+          url: 'http://localhost:3000/api/newCustomer',
+          data: customerInfo,
+          success: function (data) {
+            console.log(data);
+            console.log("You successfully posted")
+          }
 
+        });
 
-            <a href="/">← Back To Home</a>
+      });
+
+    });
+
+  </script>
+  <a href="/">← Back To Home</a>
