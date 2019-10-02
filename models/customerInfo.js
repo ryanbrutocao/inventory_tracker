@@ -14,17 +14,17 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         defaultValue: "none"
       },
-      phone:{
+      phone: {
         type: DataTypes.TEXT,
         allowNull: false,
         defaultValue: "none"
       },
-      email:{
+      email: {
         type: DataTypes.TEXT,
         allowNull: false,
         defaultValue: "none"
       },
-      streetAddress:{
+      streetAddress: {
         type: DataTypes.TEXT,
         allowNull: false,
         defaultValue: "none"
@@ -34,7 +34,7 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         defaultValue: "none"
       },
-      ST:{
+      ST: {
         type: DataTypes.TEXT,
         allowNull: false,
         defaultValue: "none"
