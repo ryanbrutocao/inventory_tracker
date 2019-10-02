@@ -4,7 +4,7 @@ module.exports = function(sequelize, DataTypes) {
   var mainInventory = sequelize.define(
     "mainInventory",
     {
-      wine: DataTypes.TEXT,
+      item: DataTypes.TEXT,
       actualInventory: DataTypes.INTEGER,
       shadowInventory: DataTypes.INTEGER,
       boxType: DataTypes.INTEGER,
