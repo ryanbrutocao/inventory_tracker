@@ -9,16 +9,41 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         defaultValue: "none"
       },
-      primaryContact: DataTypes.TEXT,
-      phone: DataTypes.TEXT,
-      email: DataTypes.TEXT,
-      streetAddress: DataTypes.TEXT,
-      city: {
+      primaryContact: {
         type: DataTypes.TEXT,
+        allowNull: false,
         defaultValue: "none"
       },
-      ST: DataTypes.TEXT,
-      zipcode: DataTypes.TEXT,
+      phone:{
+        type: DataTypes.TEXT,
+        allowNull: false,
+        defaultValue: "none"
+      },
+      email:{
+        type: DataTypes.TEXT,
+        allowNull: false,
+        defaultValue: "none"
+      },
+      streetAddress:{
+        type: DataTypes.TEXT,
+        allowNull: false,
+        defaultValue: "none"
+      },
+      city: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        defaultValue: "none"
+      },
+      ST:{
+        type: DataTypes.TEXT,
+        allowNull: false,
+        defaultValue: "none"
+      },
+      zipcode: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        defaultValue: "none"
+      },
       createdAt: {
         field: "createdAt",
         type: Sequelize.DATE
