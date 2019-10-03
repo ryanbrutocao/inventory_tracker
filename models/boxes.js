@@ -1,19 +1,19 @@
 var Sequelize = require("sequelize");
 
 module.exports = function (sequelize, DataTypes) {
-  var labels = sequelize.define("labels", {
-    accountName: {
+  var boxes = sequelize.define("boxes", {
+    boxType: {
       type: DataTypes.TEXT,
       allowNull: false,
       defaultValue: "none"
     },
-    wine: {
+    onHand: {
       type: DataTypes.TEXT,
       allowNull: false,
       defaultValue: "none"
     },
-    labelsLeft: {
-      type: DataTypes.INTEGER,
+    needed: {
+      type: DataTypes.TEXT,
       allowNull: false,
       defaultValue: "none"
     },
@@ -26,5 +26,5 @@ module.exports = function (sequelize, DataTypes) {
       freezeTableName: true
     }
   );
-  return labels;
+  return boxes;
 };

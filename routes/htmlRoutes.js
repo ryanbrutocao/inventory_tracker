@@ -5,39 +5,25 @@ module.exports = function (app) {
   // Load index page
   app.get("/", function (req, res) {
     db.mainInventory.findAll({}).then(function (results) {
-      console.log(results);
-      // console.log("this worked");
       res.render("homePage", { results: results });
 
     });
   });
 
-  //views the main page
+  //views the main inventory page
   app.get("/maininventory", function (req, res) {
     db.mainInventory.findAll({}).then(function (results) {
-      console.log(results);
-      res.render("inventory", { results: results })
+      res.render("mainInventory", { results: results })
     });
   });
 
   //views the customer page
   app.get("/customerView", function (req, res) {
     db.orders.findAll({}).then(function (results) {
-      console.log(results);
-
       res.render("customerView", { results: results })
     });
   });
 
-
-
-  app.get("/inventory", function (req, res) {
-    db.mainInventory.findOne({}).then(function (results) {
-      console.log(results);
-      res.render("inventory", { inventory: results });
-
-    });
-  });
 
   // Load example page and pass in an example by id
   app.get("/example/:id", function (req, res) {

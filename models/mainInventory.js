@@ -1,13 +1,29 @@
 var Sequelize = require("sequelize");
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   var mainInventory = sequelize.define(
     "mainInventory",
     {
-      item: DataTypes.TEXT,
-      actualInventory: DataTypes.INTEGER,
-      shadowInventory: DataTypes.INTEGER,
-      boxType: DataTypes.INTEGER,
+      vintage: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        defaultValue: "none"
+      },
+      varietal: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        defaultValue: "none"
+      },
+      actualInventory: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: "none"
+      },
+      shadowInventory: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: "none"
+      },
       createdAt: {
         field: "createdAt",
         type: Sequelize.DATE
