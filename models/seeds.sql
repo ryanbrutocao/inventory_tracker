@@ -1,12 +1,12 @@
-INSERT INTO mainInventory (vintage, varietal, actualInventory, shadowInventory) 
+INSERT INTO mainInventory (vintage, varietal, actualInventory, shadowInventory, boxType) 
 VALUES 
-	("2016", "Chardonnay", 500, 500),
-	("2017", "Chardonnay", 300, 300),
-	("2018", "Chardonnay", 500, 500),
-	("2016", "Pinot Noir", 500, 500),
-	("2017", "Pinot Noir", 400, 400),
-	("2018", "Pinot Noir", 500, 500),
-	("2016", "Merlot", 500, 500);
+	("2016", "Chardonnay", 500, 500, "WRT"),
+	("2017", "Chardonnay", 300, 300, "WRT"),
+	("2018", "Chardonnay", 500, 500, "WRT"),
+	("2016", "Pinot Noir", 500, 500, "WRU"),
+	("2017", "Pinot Noir", 400, 400, "WRU"),
+	("2018", "Pinot Noir", 500, 500, "WRU"),
+	("2016", "Merlot", 500, 500, "WBAJA");
 
 
 	INSERT INTO boxes (boxType, onHand, needed)
@@ -39,6 +39,7 @@ VALUES
 	
 
 SELECT * FROM customerInfo;
+SELECT * FROM boxes;
 SELECT * FROM mainInventory;
 SELECT * FROM orders;
 SELECT * FROM labels;

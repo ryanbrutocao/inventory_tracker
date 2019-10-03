@@ -1,4 +1,4 @@
-Add a new wine to the Orders table
+{{!-- Add a new wine to the Orders table --}}
 <div id="newWineInput">
   Account Name:<br>
   <input type="text" id="newAccountName" value="">
@@ -189,7 +189,7 @@ Add a new wine to the Orders table
   //grab #id from dropdown
   $("#customerNames").change(function () {
     var nameValue = $("select.custom-select").find(':selected').data('name');
-    console.log(nameValue)
+    console.log("name selected: ", nameValue)
     //call and get specific customer orders : populate table
     $.ajax({
       type: 'GET',

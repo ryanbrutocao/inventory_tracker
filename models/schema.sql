@@ -9,6 +9,7 @@ CREATE TABLE mainInventory (
 	varietal VARCHAR(100) NOT NULL,
 	actualInventory INTEGER(5) NOT NULL,
 	shadowInventory INTEGER(5) NOT NULL,
+	boxType VARCHAR(100) NOT NULL,
 	updatedAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
   createdAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
 	PRIMARY KEY (id)

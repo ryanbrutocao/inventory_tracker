@@ -29,8 +29,32 @@ module.exports = function (app) {
     });
   });
 
+  //this works to get back the information for one single wine which is chosen from a dropdown menu
+
+  app.get("/api/oneVarietal/:varietal", function (req, res) {
+    db.mainInventory.findAll({
+      where: {
+        varietal: req.params.varietal
+      }
+    }).then(function (results) {
+      res.json(results);
+    });
+  });
+
+  //this works to get back the information for one single wine for all customers (from orders) which is chosen from a dropdown menu
+
+  app.get("/api/orders/:varietal", function (req, res) {
+    db.orders.findAll({
+      where: {
+        varietal: req.params.varietal
+      }
+    }).then(function (results) {
+      res.json(results);
+    });
+  });
+
   //this works to get back the information for one single client when you know the spacific name (such as from a dropdown menu)
- 
+
   app.get("/api/oneCustomer/:accountName", function (req, res) {
     db.orders.findAll({
       where: {
@@ -42,7 +66,7 @@ module.exports = function (app) {
   });
 
   //this works to get back the contact information for one single client when you know the spacific name (such as from a dropdown menu)
-   app.get("/api/customerContact/:clientName", function (req, res) {
+  app.get("/api/customerContact/:clientName", function (req, res) {
     db.customerInfo.findAll({
       where: {
         clientName: req.params.clientName
@@ -76,9 +100,17 @@ module.exports = function (app) {
   //   });
   // });
 
-// Create a new order
+  // Create a new order
   app.post("/api/orders", function (req, res) {
     db.orders.create(req.body).then(function (results) {
+      console.log(results)
+      res.json(results);
+    });
+  });
+
+  // Create a new wine item on mainInventory
+  app.post("/api/newWine", function (req, res) {
+    db.mainInventory.create(req.body).then(function (results) {
       console.log(results)
       res.json(results);
     });

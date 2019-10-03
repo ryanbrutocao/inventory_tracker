@@ -1,5 +1,27 @@
+<div id="newWineInput">
+
+  Vintage:<br>
+  <input type="text" id="newVintage" value="">
+  <br>
+  Varietal:<br>
+  <input type="text" id="newVarietal" value="">
+  <br>
+  Current Inventory:<br>
+  <input type="text" id="currentInventory" value="">
+  <br>
+  Shadow Inventory:<br>
+  <input type="text" id="shadowInventory" value="">
+  <br>
+  Box Type:<br>
+  <input type="text" id="newBoxType" value="">
+  <br>
+</div><button id="addNewWine">
+  Add Wine
+</button>
+
+
 <div class="jumbotron">
-  <h1><span class="customerName">View a specific varietal</span></h1> <br>
+  <h1><span class="customerName">View By</span></h1> <br>
 
   <div class="input-group mb-3">
     <div class="input-group-prepend">
@@ -13,20 +35,58 @@
   </div>
 
 
-<div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <label class="input-group-text" for="customerNames">Varietal</label>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="wineVarietal">Varietal</label>
+      </div>
+      <select class="custom-select wine" id="wineVarietal">
+
+        <option selected> Select ...</option>
+        <option data-name="Sauvignon Blanc">Sauvignon Blanc</option>
+        <option data-name="Chardonnay">Chardonnay</option>
+        <option data-name="Pinot Noir">Pinot Noir</option>
+        <option data-name="Red Blend">Red Blend</option>
+        <option data-name="Zinfandel">Zinfandel</option>
+        <option data-name="Merlot">Merlot</option>
+        <option data-name="Cabernet">Cabernet</option>
+      </select>
     </div>
-    <select class="custom-select" id="varietal">
 
-      <option selected> Select ...</option>
 
-    </select>
-  </div>
+
 
 </div>
+<table class="table table-striped table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Brand</th>
+      <th scope="col">Vintage</th>
+      <th scope="col">Varietal</th>
+      <th scope="col">Current Inventory</th>
+      <th scope="col">Promised Inventory</th>
+      <th scope="col">Box Type</th>
+    </tr>
+  </thead>
+  <tbody id="singleVarietalTable">
 
 
+  </tbody>
+</table>
+<table class="table table-striped table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Vintage</th>
+      <th scope="col">Varietal</th>
+      <th scope="col">Current Inventory</th>
+      <th scope="col">Promised Inventory</th>
+      <th scope="col">Box Type</th>
+    </tr>
+  </thead>
+  <tbody id="allWineInventory">
+
+
+  </tbody>
+</table>
 
 
 <div class="container">
@@ -36,21 +96,11 @@
         <div class="card-body">
           <h5 class="card-title">All Inventory</h5>
 
- 
- 
-  {{#each results}}
-          <p>
-            <strong>Wine:</strong>: {{item}}</p>
-          <p>
-            <strong>Actual Inventory:</strong> {{actualInventory}}</p>
-          <p>
-            <strong>Shadow Inventory:</strong> {{shadowInventory}}</p>
 
-          <hr>
 
- {{/each}}
 
-            <a href="/">← Back To Home</a>
+
+          <a href="/">← Back To Home</a>
         </div>
       </div>
     </div>
@@ -76,6 +126,171 @@
       }
     });
     //____________________________________________
+    // auto displays main inventory... set in function so we can override?
+    function mainInventory() {
+
+      $.ajax({
+        type: 'GET',
+        url: "http://localhost:3000/api/maininventory",
+        success: function (data) {
+          for (let i = 0; i < data.length; i++) {
+            var itemID = (data[i].id)
+            var vintage = (data[i].vintage)
+            var varietal = (data[i].varietal)
+            var actualInventory = (data[i].actualInventory)
+            var shadowInventory = (data[i].shadowInventory)
+            var boxType = (data[i].boxType)
+
+            var tr = $("<tr>")
+            var th = $("<th scope='row'></th>")
+            var vint = $("<td>" + vintage + "</td>")
+            var kind = $("<td>" + varietal + "</td>")
+            var actual = $("<td>" + actualInventory + "</td>")
+            var shadow = $("<td>" + shadowInventory + "</td>")
+            var boxtype = $("<td>" + boxType + "</td>")
+
+            vint.attr("data-id", itemID);
+            kind.attr("data-id", itemID);
+            actual.attr("data-id", itemID);
+            shadow.attr("data-id", itemID);
+            boxtype.attr("data-id", itemID);
+
+
+            tr.append(vint, kind, actual, shadow, boxtype)
+
+            $("#allWineInventory").append(tr)
+          }
+        }
+
+      })
+    } mainInventory()
+    //____________________________________________
+
+
 
   })
+
+  //add a new client
+  $("#addNewWine").on("click", function (event) {
+    event.preventDefault();
+    var newVintage = $("#newVintage").val();
+    var newVarietal = $("#newVarietal").val();
+    var currentInventory = $("#currentInventory").val();
+    var shadowInventory = $("#shadowInventory").val();
+    var boxType = $("#newBoxType").val();
+    console.log("box Type: ", boxType)
+
+    var newWineInfo = {
+      "vintage": newVintage,
+      "varietal": newVarietal,
+      "actualInventory": currentInventory,
+      "shadowInventory": shadowInventory,
+      "boxType": boxType
+    }
+    $.ajax({
+      type: 'POST',
+      url: 'http://localhost:3000/api/newWine',
+      data: newWineInfo,
+      success: function (data) {
+        console.log("You've successfully added a wine")
+        $("#newVintage").val("");
+        $("#newVarietal").val("");
+        $("#currentInventory").val("");
+        $("#shadowInventory").val("");
+        $("#newBoxType").val("");
+      }
+
+    });
+
+  });
+  //____________________________________________
+
+  //grabbing all info for a specific wine that is chosen from dropdown menu.
+  $("#wineVarietal").change(function () {
+    var varietalType = $("select.custom-select.wine").find(':selected').data('name');
+    console.log("Varietal selected: ", varietalType)
+    //call and get specific wine from warehouse : populate table
+    $.ajax({
+      type: 'GET',
+      url: "http://localhost:3000/api/oneVarietal/" + varietalType + "",
+      success: function (data) {
+        console.log("You are getting the info back")
+        $("#singleVarietalTable").empty();
+        for (let i = 0; i < data.length; i++) {
+          var itemID = (data[i].id)
+          var vintage = (data[i].vintage)
+          console.log("vintage: ", vintage)
+          var varietal = (data[i].varietal)
+          var actualInventory = (data[i].actualInventory)
+          var shadowInventory = (data[i].shadowInventory)
+          var boxType = (data[i].boxType)
+
+          var tr = $("<tr>")
+          var th = $("<th scope='row'></th>")
+          var wHouse = $("<td>Warehouse</td>")
+          var vint = $("<td>" + vintage + "</td>")
+          var kind = $("<td>" + varietal + "</td>")
+          var actual = $("<td>" + actualInventory + "</td>")
+          var shadow = $("<td>" + shadowInventory + "</td>")
+          var boxtype = $("<td>" + boxType + "</td>")
+
+          vint.attr("data-id", itemID);
+          kind.attr("data-id", itemID);
+          actual.attr("data-id", itemID);
+          shadow.attr("data-id", itemID);
+          boxtype.attr("data-id", itemID);
+
+          tr.append(wHouse, vint, kind, actual, shadow, boxtype)
+
+          $("#singleVarietalTable").append(tr)
+        }
+
+      }
+
+    })
+    //call and get specific wine from each customer: populate table
+    $.ajax({
+      type: 'GET',
+      url: "http://localhost:3000/api/orders/" + varietalType + "",
+      success: function (data) {
+        console.log("You are getting the customer info back")
+        console.log("custom data: ", data)
+
+        for (let i = 0; i < data.length; i++) {
+          var itemID = (data[i].id)
+          var labelName = (data[i].accountName)
+          console.log("labelName: ",labelName)
+          var vintage = (data[i].vintage)
+          var varietal = (data[i].varietal)
+          var actualInventory = (data[i].actualOrdered)
+          var shadowInventory = (data[i].promised)
+          var boxType = (data[i].boxType)
+
+          var tr = $("<tr>")
+          var th = $("<th scope='row'></th>")
+          var labName = $("<td>" + labelName + "</td>")
+          var vint = $("<td>" + vintage + "</td>")
+          var kind = $("<td>" + varietal + "</td>")
+          var actual = $("<td>" + actualInventory + "</td>")
+          var shadow = $("<td>" + shadowInventory + "</td>")
+          var boxtype = $("<td>" + boxType + "</td>")
+
+          vint.attr("data-id", itemID);
+          kind.attr("data-id", itemID);
+          actual.attr("data-id", itemID);
+          shadow.attr("data-id", itemID);
+          boxtype.attr("data-id", itemID);
+
+          tr.append(labName, vint, kind, actual, shadow, boxtype)
+
+          $("#singleVarietalTable").append(tr)
+        }
+      }
+
+    })
+
+  });
+     //____________________________________________
+
+
 </script>
