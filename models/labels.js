@@ -7,8 +7,18 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       defaultValue: "none"
     },
-    wine: {
+    vintage: {
       type: DataTypes.TEXT,
+      allowNull: false,
+      defaultValue: "none"
+    },
+    varietal: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      defaultValue: "none"
+    },
+    promised: {
+      type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: "none"
     },
