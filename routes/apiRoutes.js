@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 var db = require("../models");
 var sequelize = require("sequelize");
 
@@ -63,7 +64,7 @@ module.exports = function(app) {
       console.log(req.body);
       res.json(results);
       updateMainInventory(results);
-      deductLabels(results);
+      updateLabelsTable(results);
     });
   });
 
@@ -145,26 +146,31 @@ module.exports = function(app) {
 
   /////////Update Main Inventory Wine and Boxes when an order is placed/////////////////////////////////
   function updateMainInventory(results) {
-    //Update actualInventory and shadowInventory of wine in mainInventory
-    db.mainInventory
-      .update(
-        {
-          actualInventory: sequelize.literal(
-            "actualInventory - " + results.actualOrdered
-          ),
-          shadowInventory: sequelize.literal(
-            "shadowInventory - " + results.promised
-          )
-        },
-        {
-          where: {
-            item: results.wine
+    //if there is an actual order
+    if (results.actualOrdered) {
+      db.mainInventory
+        .update(
+          {
+            //deduct actual order from actual inventory
+            actualInventory: sequelize.literal(
+              "actualInventory - " + results.actualOrdered
+            )
+          },
+          {
+            where: {
+              item: results.wine
+            }
           }
-        }
-      )
-      .then(function(dbUpdate) {
-        console.log(dbUpdate);
-      });
+        )
+        .then(function(dbUpdate) {
+          console.log(dbUpdate);
+        });
+    }
+    //if there was an amount promised
+    if (results.promised) {
+      
+    }
+    
 
     //Establish box quantity and type to deduct
     var boxType;
@@ -204,16 +210,20 @@ module.exports = function(app) {
     }
   }
 
-  //////////////DEDUCT LABELS AFTER AN ACTUAL ORDER ///////////////////////////////////////////////
+  //////////////ADJUST LABELS AND PROMISES AFTER A PROMISE OR ACTUAL ORDER ///////////////////////////////////////////////
 
-  function deductLabels(results) {
+  function updateLabelsTable(results) {
+    //If there was an actual order
     if (results.actualOrdered) {
       db.labels
         .update(
           {
+            //deduct from their current label count
             labelsLeft: sequelize.literal(
               "labelsLeft - " + results.actualOrdered
-            )
+            ),
+            //deduct from the amount they promised
+            promised: sequelize.literal("promised - " + results.actualOrdered)
           },
           {
             where: {
@@ -225,6 +235,20 @@ module.exports = function(app) {
         .then(function(labelUpdate) {
           console.log(labelUpdate);
         });
+    }
+
+    //If there was an amount promised
+    if (results.promised) {
+      db.labels.update({
+        //add the new promised amount to the previous promised amount
+        promised: sequelize.literal("promised + " + results.promised)
+      },
+      {
+        where: {
+          accountName: results.accountName,
+          wine: results.wine
+        }
+      });
     }
   }
 };

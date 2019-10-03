@@ -17,12 +17,6 @@ module.exports = function(sequelize, DataTypes) {
     boxTypeOne: DataTypes.INTEGER,
     boxTypeTwo: DataTypes.INTEGER,
     boxTypeThree: DataTypes.INTEGER,
-    // labelsLeft: DataTypes.INTEGER,
-    notes: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-      defaultValue: "none"
-    },
     createdAt: {
       field: "createdAt",
       type: Sequelize.DATE
