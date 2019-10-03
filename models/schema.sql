@@ -5,12 +5,24 @@ USE main_wine;
 
 CREATE TABLE mainInventory (
 	id int NOT NULL AUTO_INCREMENT,
-	item VARCHAR(100) NOT NULL,
+	vintage VARCHAR(100) NOT NULL,
+	varietal VARCHAR(100) NOT NULL,
 	actualInventory INTEGER(5) NOT NULL,
 	shadowInventory INTEGER(5) NOT NULL,
-	boxType INTEGER(2) NOT NULL,
+	boxType VARCHAR(100) NOT NULL,
 	updatedAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
-    createdAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
+  createdAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE boxes (
+
+	id int NOT NULL AUTO_INCREMENT,
+	boxType VARCHAR(100) NOT NULL,
+	onHand INTEGER(10) NOT NULL,
+	needed INTEGER(10) NOT NULL,
+	updatedAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
+  createdAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
 	PRIMARY KEY (id)
 );
 
@@ -32,12 +44,11 @@ CREATE TABLE customerInfo (
 CREATE TABLE orders (
 	id int NOT NULL AUTO_INCREMENT,
 	accountName VARCHAR(100) NOT NULL,
-	wine VARCHAR(100) NOT NULL,
+	vintage VARCHAR(100) NOT NULL,
+	varietal VARCHAR(100) NOT NULL,
 	actualOrdered INTEGER(5),
 	promised INTEGER(5),
-	boxTypeOne INTEGER(5),
-	boxTypeTwo INTEGER(5),
-	boxTypeThree INTEGER(5),
+	boxType VARCHAR(100),
 	-- labelsLeft INTEGER(5),
 	notes VARCHAR(200),
 	updatedAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),

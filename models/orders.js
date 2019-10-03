@@ -1,23 +1,36 @@
 var Sequelize = require("sequelize");
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   var orders = sequelize.define("orders", {
     accountName: {
       type: DataTypes.TEXT,
       allowNull: false,
       defaultValue: "none"
     },
-    wine: {
+    vintage: {
       type: DataTypes.TEXT,
       allowNull: false,
       defaultValue: "none"
     },
-    actualOrdered: DataTypes.INTEGER,
-    promised: DataTypes.INTEGER,
-    boxTypeOne: DataTypes.INTEGER,
-    boxTypeTwo: DataTypes.INTEGER,
-    boxTypeThree: DataTypes.INTEGER,
-    // labelsLeft: DataTypes.INTEGER,
+    varietal: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      defaultValue: "none"
+    },
+    actualOrdered: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    promised: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+     
+    },
+    boxType: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      defaultValue: "none"
+    },
     notes: {
       type: DataTypes.TEXT,
       allowNull: false,
@@ -27,6 +40,10 @@ module.exports = function(sequelize, DataTypes) {
       field: "createdAt",
       type: Sequelize.DATE
     }
-  });
+  },
+    {
+      freezeTableName: true
+    }
+  );
   return orders;
 };
