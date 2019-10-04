@@ -114,11 +114,6 @@ module.exports = function(app) {
     db.mainInventory.create(req.body).then(function (results) {
       console.log(results)
       res.json(results);
-<<<<<<< HEAD
-      updateMainInventory(results);
-      updateLabelsTable(results);
-=======
->>>>>>> e19bf0476125673e3e59d19a5678c373913f0f59
     });
   });
 
