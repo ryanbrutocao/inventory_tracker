@@ -1,29 +1,64 @@
+{{!-- "update boxes" input field --}}
+Add additional boxes to inventory<br>
+<select id="addNewBoxes">
+  <option selected> Select ...</option>
+  <option data-name="WRU">WRU</option>
+  <option data-name="WRT">WRT</option>
+  <option data-name="WBAJA">WBAJA</option>
+
+</select>
+  Quantity:<br>
+  <input type="text" id="boxQuantity" value="">
+  <br>
+<button id="additionalBoxes">
+  Add boxes to inventory
+</button>
+<hr>
+
+{{!-- 'Add new wine' input fields --}}
 <div id="newWineInput">
 
   Vintage:<br>
   <input type="text" id="newVintage" value="">
   <br>
   Varietal:<br>
-  <input type="text" id="newVarietal" value="">
+     <select id="newVarietal">
+
+      <option selected> Select ...</option>
+      <option data-name="Sauvignon Blanc">Sauvignon Blanc</option>
+      <option data-name="Chardonnay">Chardonnay</option>
+      <option data-name="Pinot Noir">Pinot Noir</option>
+      <option data-name="Red Blend">Red Blend</option>
+      <option data-name="Zinfandel">Zinfandel</option>
+      <option data-name="Merlot">Merlot</option>
+      <option data-name="Cabernet">Cabernet</option>
+    </select>
   <br>
   Current Inventory:<br>
-  <input type="text" id="currentInventory" value="">
+  <input type="text" id="currentInventory" value="0">
   <br>
   Shadow Inventory:<br>
-  <input type="text" id="shadowInventory" value="">
+  <input type="text" id="shadowInventory" value="0" >
   <br>
   Box Type:<br>
-  <input type="text" id="newBoxType" value="">
+ <select id="boxType">
+  <option selected> Select ...</option>
+  <option data-name="WRU">WRU</option>
+  <option data-name="WRT">WRT</option>
+  <option data-name="WBAJA">WBAJA</option>
+
+</select>
   <br>
-</div><button id="addNewWine">
+</div>
+<button id="addNewWine">
   Add Wine
 </button>
-
+<hr>
 
 <div class="jumbotron">
   <h1><span class="customerName">View By</span></h1> <br>
 
-  <div class="input-group mb-3">
+  {{!-- <div class="input-group mb-3">
     <div class="input-group-prepend">
       <label class="input-group-text" for="customerNames">Client</label>
     </div>
@@ -32,7 +67,7 @@
       <option selected> Select ...</option>
 
     </select>
-  </div>
+  </div> --}}
 
 
   <div class="input-group mb-3">
@@ -96,4 +131,4 @@
 </div>
 
 
-  <script src="./js/mainInventory.js"></script>
+<script src="./js/mainInventory.js"></script>

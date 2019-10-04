@@ -204,7 +204,7 @@ module.exports = function(app) {
           onHand: sequelize.literal("onHand + " + req.body.onHand)
         }, {
           where: {
-            id: req.body.id
+            boxType: req.body.boxType
           }
         })
       .then(function(dbUpdate) {

@@ -8,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
       defaultValue: "none"
     },
     onHand: {
-      type: DataTypes.TEXT,
+      type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: "none"
     },

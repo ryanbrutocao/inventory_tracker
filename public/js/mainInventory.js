@@ -2,27 +2,61 @@ $(document).ready(function () {
   // populates the table on load
   mainInventory();
 
-  //populates the customer dropdown
-  $.ajax({
-    type: 'GET',
-    url: 'http://localhost:3000/api/orders',
+  // //populates the customer dropdown -- code on mainInventory.hbs is also commented out.
+  // $.ajax({
+  //   type: 'GET',
+  //   url: 'http://localhost:3000/api/orders',
 
-    success: function (data) {
-      for (i = 0; i < data.length; i++) {
-        var custName = data[i].accountName;
-        var dropOption = "<option id=" + custName + ">" + custName + "</option>";
+  //   success: function (data) {
+  //     for (i = 0; i < data.length; i++) {
+  //       var custName = data[i].accountName;
+  //       var dropOption = "<option id=" + custName + ">" + custName + "</option>";
 
-        $("#customerNames").append(dropOption)
-      }
+  //       $("#customerNames").append(dropOption)
+  //     }
 
-    }
-  });
+  //   }
+  // });
   //____________________________________________
 
 
 
 
 })
+
+
+//add a additional boxes to inventory
+$("#additionalBoxes").on("click", function (event) {
+  event.preventDefault();
+  var boxType =  $("select").find(':selected').data('name');
+  var boxToString = boxType.toString()
+  var boxQuantity = $("#boxQuantity").val();
+  var parseQuant = parseInt(boxQuantity)
+  console.log(typeof boxType);
+  console.log("box Type: ", boxType)
+  console.log("box quantity: ", boxQuantity)
+
+
+  var boxInfo = {
+    "boxType": boxToString,
+    "onHand": parseQuant
+  }
+  $.ajax({
+    type: 'PUT',
+    url: 'http://localhost:3000/api/boxes',
+    data: boxInfo,
+    success: function (data) {
+      console.log("You've successfully added a wine")
+      $("#addNewBoxes").val("");
+      $("#boxQuantity").val("");
+     
+    }
+
+  });
+
+});
+//____________________________________________
+
 
 //add a new client
 $("#addNewWine").on("click", function (event) {
@@ -31,7 +65,7 @@ $("#addNewWine").on("click", function (event) {
   var newVarietal = $("#newVarietal").val();
   var currentInventory = $("#currentInventory").val();
   var shadowInventory = $("#shadowInventory").val();
-  var boxType = $("#newBoxType").val();
+  var boxType = $("#boxType").val();
   console.log("box Type: ", boxType)
 
   var newWineInfo = {
@@ -51,7 +85,7 @@ $("#addNewWine").on("click", function (event) {
       $("#newVarietal").val("");
       $("#currentInventory").val("");
       $("#shadowInventory").val("");
-      $("#newBoxType").val("");
+      $("#boxType").val("");
     }
 
   });
