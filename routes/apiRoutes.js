@@ -180,28 +180,28 @@ module.exports = function(app) {
       });
   });
 
-  //Update wine label quantity
-  // app.put("/api/labels", function(req, res) {
-  //   db.labels
-  //     .update(
-  //       {
+  //Update wine label quantity (used to add labels to an existing label count)
+  app.put("/api/labels", function(req, res) {
+    db.labels
+      .update(
+        {
+          labelsLeft: sequelize.literal("labelsLeft + " + req.body.labelsLeft)
+        }, {
+        where: {
+          id: req.body.id
+        }
+      })
+      .then(function(dbUpdate) {
+        res.json(dbUpdate);
+      });
+  });
 
-  //       } {
-  //       where: {
-  //         id: req.body.id
-  //       }
-  //     })
-  //     .then(function(dbUpdate) {
-  //       res.json(dbUpdate);
-  //     });
-  // });
-
-  //Add boxes to inventory 
+  //Add boxes to inventory (used to add boxes to an existing box count)
   app.put("/api/boxes", function(req, res) {
     db.boxes
       .update(
         {
-          onhand: sequelize.literal("onhand + " + req.body.onhand)
+          onHand: sequelize.literal("onHand + " + req.body.onHand)
         }, {
           where: {
             id: req.body.id
@@ -213,19 +213,7 @@ module.exports = function(app) {
   });
 
   /////////Update Main Inventory Wine and Boxes when an order is placed/////////////////////////////////
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
+
   function updateAfterOrder(results) {
     //if there is an actual order
     if (results.actualOrdered) {
@@ -320,9 +308,4 @@ module.exports = function(app) {
     }
     
   }
-
-  ///////////////ADD BOXES TO INVENTORY////////////////////////////////////////////////////////////
-  function addBoxes (results) {
-
-  }
-};
+}
