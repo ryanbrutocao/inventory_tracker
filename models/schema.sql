@@ -11,7 +11,7 @@ CREATE TABLE mainInventory (
 	shadowInventory INTEGER(5) NOT NULL,
 	boxType VARCHAR(100) NOT NULL,
 	updatedAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
-  createdAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
+  	createdAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
 	PRIMARY KEY (id)
 );
 
@@ -20,9 +20,8 @@ CREATE TABLE boxes (
 	id int NOT NULL AUTO_INCREMENT,
 	boxType VARCHAR(100) NOT NULL,
 	onHand INTEGER(10) NOT NULL,
-	needed INTEGER(10) NOT NULL,
 	updatedAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
-  createdAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
+  	createdAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
 	PRIMARY KEY (id)
 );
 
@@ -49,15 +48,8 @@ CREATE TABLE orders (
 	varietal VARCHAR(100) NOT NULL,
 	actualOrdered INTEGER(5),
 	promised INTEGER(5),
-<<<<<<< HEAD
-	boxTypeOne INTEGER(5),
-	boxTypeTwo INTEGER(5),
-	boxTypeThree INTEGER(5),
-=======
 	boxType VARCHAR(100),
-	-- labelsLeft INTEGER(5),
 	notes VARCHAR(200),
->>>>>>> e19bf0476125673e3e59d19a5678c373913f0f59
 	updatedAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
     createdAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
 	PRIMARY KEY (id)

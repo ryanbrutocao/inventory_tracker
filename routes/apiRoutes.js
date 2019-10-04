@@ -77,9 +77,16 @@ module.exports = function(app) {
     });
   });
 
-  //Show labels left table
+  //Shows labels tables
   app.get("/api/labels", function(req, res) {
     db.labels.findAll({}).then(function(results) {
+      res.json(results);
+    });
+  });
+
+  //shows boxes table
+  app.get("/api/boxes", function(req, res) {
+    db.boxes.findAll({}).then(function(results) {
       res.json(results);
     });
   });
@@ -92,27 +99,19 @@ module.exports = function(app) {
   });
 
   // Create a new order (brians original code)
-  // app.post("/api/orders", function (req, res) {
-  //   db.orders.create(req.body).then(function (results) {
-  //     console.log(results)
-  //     res.json(results);
-  //     updateMainInventory(results)
-  //     deductLabels(results)
-  //   });
-  // });
-
-  // Create a new order
   app.post("/api/orders", function (req, res) {
     db.orders.create(req.body).then(function (results) {
-      console.log(results)
+      console.log(results);
       res.json(results);
+      updateAfterOrder(results);
     });
   });
+
 
   // Create a new wine item on mainInventory
   app.post("/api/newWine", function (req, res) {
     db.mainInventory.create(req.body).then(function (results) {
-      console.log(results)
+      console.log(results);
       res.json(results);
     });
   });
@@ -182,20 +181,52 @@ module.exports = function(app) {
   });
 
   //Update wine label quantity
-  app.put("/api/labels", function(req, res) {
-    db.labels
-      .update(req.body, {
-        where: {
-          id: req.body.id
-        }
-      })
+  // app.put("/api/labels", function(req, res) {
+  //   db.labels
+  //     .update(
+  //       {
+
+  //       } {
+  //       where: {
+  //         id: req.body.id
+  //       }
+  //     })
+  //     .then(function(dbUpdate) {
+  //       res.json(dbUpdate);
+  //     });
+  // });
+
+  //Add boxes to inventory 
+  app.put("/api/boxes", function(req, res) {
+    db.boxes
+      .update(
+        {
+          onhand: sequelize.literal("onhand + " + req.body.onhand)
+        }, {
+          where: {
+            id: req.body.id
+          }
+        })
       .then(function(dbUpdate) {
         res.json(dbUpdate);
       });
   });
 
   /////////Update Main Inventory Wine and Boxes when an order is placed/////////////////////////////////
-  function updateMainInventory(results) {
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  function updateAfterOrder(results) {
     //if there is an actual order
     if (results.actualOrdered) {
       db.mainInventory
@@ -208,97 +239,90 @@ module.exports = function(app) {
           },
           {
             where: {
-              item: results.wine
+              vintage: results.vintage,
+              varietal: results.varietal
             }
           }
         )
         .then(function(dbUpdate) {
           console.log(dbUpdate);
         });
-    }
-    //if there was an amount promised
-    if (results.promised) {
       
-    }
-    
-
-    //Establish box quantity and type to deduct
-    var boxType;
-    var boxNum;
-    if (results.boxTypeOne) {
-      boxType = "box 1";
-      boxNum = results.boxTypeOne;
-    } else if (results.boxTypeTwo) {
-      boxType = "box 2";
-      boxNum = results.boxTypeTwo;
-    } else if (results.boxTypeThree) {
-      boxType = "box 3";
-      boxNum = results.boxTypeThree;
-    } else {
-      boxType = null;
-    }
-
-    // Update actual box inventory in mainInventory if boxes are used in actual order
-    if (boxType) {
-      db.mainInventory
+      //deduct actualOrderd of boxType from boxes table
+      db.boxes
         .update(
           {
-            actualInventory: sequelize.literal("actualInventory - " + boxNum)
+            onHand: sequelize.literal("onHand - " + results.actualOrdered )
           },
           {
             where: {
-              item: boxType
+              boxType: results.boxType
             }
           }
-        )
-        .then(function(boxUpdate) {
-          console.log(
-            boxNum + " was deducted from " + boxType + " in main inventory."
-          );
-          console.log(boxUpdate);
+        ).then(function(dbUpdate) {
+          console.log(dbUpdate);
         });
-    }
-  }
-
-  //////////////ADJUST LABELS AND PROMISES AFTER A PROMISE OR ACTUAL ORDER ///////////////////////////////////////////////
-
-  function updateLabelsTable(results) {
-    //If there was an actual order
-    if (results.actualOrdered) {
+      
+      //deduct from labels and promised on "labels" table
+      var labelCount = results.actualOrdered * 12;
       db.labels
         .update(
           {
-            //deduct from their current label count
-            labelsLeft: sequelize.literal(
-              "labelsLeft - " + results.actualOrdered
-            ),
-            //deduct from the amount they promised
-            promised: sequelize.literal("promised - " + results.actualOrdered)
+            promised: sequelize.literal("promised - " + results.actualOrdered),
+            labelsLeft: sequelize.literal("labelsLeft - " + labelCount)
           },
           {
             where: {
               accountName: results.accountName,
-              wine: results.wine
+              vintage: results.vintage,
+              varietal: results.varietal
             }
           }
-        )
-        .then(function(labelUpdate) {
-          console.log(labelUpdate);
+        ).then(function(dbUpdate) {
+          console.log(dbUpdate);
         });
     }
-
-    //If there was an amount promised
+    //if there was an amount promised
     if (results.promised) {
-      db.labels.update({
-        //add the new promised amount to the previous promised amount
-        promised: sequelize.literal("promised + " + results.promised)
-      },
-      {
-        where: {
-          accountName: results.accountName,
-          wine: results.wine
-        }
-      });
+      
+      //deduct promise amount from mainInventory shadowInventory amount
+      db.mainInventory
+        .update(
+          {
+            shadowInventory: sequelize.literal("shadowInventory - " + results.promised)
+          },
+          {
+            where: {
+              vintage: results.vintage,
+              varietal: results.varietal
+            }
+          }
+        ).then(function(dbUpdate) {
+          console.log(dbUpdate);
+        });
+
+      //Add promised to client's vintage/varietal row in labels
+      db.labels
+        .update(
+          {
+            promised: sequelize.literal("promised + " + results.promised)
+          },
+          {
+            where: {
+              accountName: results.accountName,
+              vintage: results.vintage,
+              varietal: results.varietal
+            }
+          }  
+        ).then(function(dbUpdate) {
+          console.log(dbUpdate);
+        });
     }
+    
+  }
+
+  ///////////////ADD BOXES TO INVENTORY////////////////////////////////////////////////////////////
+  function addBoxes (results) {
+
   }
 };
