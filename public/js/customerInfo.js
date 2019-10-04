@@ -12,7 +12,6 @@
 
 // })
 function callThis(){
-  event.preventDefault();
   console.log("This is coming from the connected JS page");
 
 }
