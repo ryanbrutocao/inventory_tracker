@@ -9,19 +9,19 @@ VALUES
 	("2016", "Merlot", 500, 500, "WBAJA");
 
 
-	INSERT INTO boxes (boxType, onHand, needed)
-	VALUES
-	("box 1", 3000, 2000),
-	("box 2", 4000, 2000),
-	("box 3", 5000, 2000);
+INSERT INTO boxes (boxType, onHand)
+VALUES
+	("WRT", 3000),
+	("WRU", 4000),
+	("WBAJA", 5000);
 
 
 
-INSERT INTO customerInfo (clientName, primaryContact, phone, email, streetAddress, city, ST, zipcode) 
+INSERT INTO customerInfo (clientName, primaryContact, phone, email, streetAddress, city, ST, zipcode, notes) 
 VALUES 
-	("Mack", "Mack", "123-456-7890","melissa@winecompany.com", "123 Main St", "New York City", "NY", "01234"),
-	("Jared", "Jared", "234-456-7890","jared@winecompany.com", "123 Main St", "San Francisco", "CA", "23456"),
-	("Steven", "Steven", "345-456-7890", "steven@winecompany.com", "123 Main St", "Charlotte", "NC", "34567");
+	("Mack", "Mack", "123-456-7890","melissa@winecompany.com", "123 Main St", "New York City", "NY", "01234", "notes test"),
+	("Jared", "Jared", "234-456-7890","jared@winecompany.com", "123 Main St", "San Francisco", "CA", "23456", "notes test"),
+	("Steven", "Steven", "345-456-7890", "steven@winecompany.com", "123 Main St", "Charlotte", "NC", "34567", "notes test");
 
 
 INSERT INTO orders (accountName, vintage, varietal, actualOrdered, promised, boxType, notes)
