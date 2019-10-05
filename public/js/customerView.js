@@ -8,7 +8,6 @@ $(document).ready(function () {
       for (i = 0; i < data.length; i++) {
         var custName = data[i].clientName;
         var dropOption = "<option data-name=" + custName + "  >" + custName + "</option>";
-
         $("#customerNames").append(dropOption)
       }
 
@@ -72,8 +71,10 @@ $("#newClientSubmit").on("click", function (event) {
 
 
 });
-function winebox() {
-  switch (salesVarietalDropdown) {
+function winebox(varData) {
+  console.log("switch sales varietal: ", varData);
+  var boxType;
+  switch (varData) {
     case "Sauvignon Blanc":
       boxType = "WRT";
       break;
@@ -95,6 +96,8 @@ function winebox() {
     case "Cabernet":
       boxType = "WBAJA";
   }
+  console.log("boxtype switch chosen:", boxType);
+  return boxType;
 }
 
 // input form for adding a new sale or promise
@@ -103,30 +106,29 @@ $("#addNewSale").on("click", function (event) {
   var salesAccountName = $("#salesAccountName").val();
   var salesVintage = $("#salesVintage").val();
   var salesQuantity = $("#salesQuantity").val();
-  var salesVarietalDropdown = $("#salesVarietalDropdown").val();
-  var actualPromise = $("#actualPromise").val();
+  var salesVarietalDropdown = $("select.zebra").find(':selected').data('name');
   console.log("varietal picked: ", salesVarietalDropdown);
+  console.log("varietal picked: ", typeof salesVarietalDropdown);
+  var actualPromise = $("#actualPromise").val();
   var newSaleInfo;
   var boxType;
   console.log("box type", boxType);
  
   if (actualPromise === "Actual") {
-    winebox(boxType)
     var newSaleInfo = {
       "accountName": salesAccountName,
       "vintage": salesVintage,
       "varietal": salesVarietalDropdown,
       "actualOrdered": salesQuantity,
-      "boxType": boxType
+      "boxType":     winebox(salesVarietalDropdown)
     }
   } else {
-    winebox(boxType)
     var newSaleInfo = {
       "accountName": salesAccountName,
       "vintage": salesVintage,
       "varietal": salesVarietalDropdown,
       "promised": salesQuantity,
-      "boxType": boxType
+      "boxType":     winebox(salesVarietalDropdown)
     }
   }
 
@@ -199,6 +201,7 @@ $("#customerNames").change(function (dataname) {
 function one(data) {
   nameValue = data.originalEvent.target.value
   console.log("data: ", data.originalEvent.target.value);
+        $("#clientWines").empty()
 
   $.ajax({
     type: 'GET',
@@ -291,7 +294,7 @@ $("#newWineInput").change(function (data) {
   event.preventDefault();
   var accountName = $("#newAccountName").val();
   var newVintage = $("#newVintage").val();
-  var salesVarietalDropdown = varietalType
+  var salesVarietalDropdown = $("select.varietalDropdown").find(':selected').data('name');
   console.log("nv", salesVarietalDropdown);
   var labelsAdded = $("#labelsAdded").val();
   var quantPromised = $("#quantPromised").val();
