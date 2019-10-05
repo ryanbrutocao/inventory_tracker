@@ -28,7 +28,7 @@ $(document).ready(function () {
 //add a additional boxes to inventory
 $("#additionalBoxes").on("click", function (event) {
   event.preventDefault();
-  var boxType =  $("select").find(':selected').data('name');
+  var boxType = $("select").find(':selected').data('name');
   var boxToString = boxType.toString()
   var boxQuantity = $("#boxQuantity").val();
   var parseQuant = parseInt(boxQuantity)
@@ -49,7 +49,7 @@ $("#additionalBoxes").on("click", function (event) {
       console.log("You've successfully added a wine")
       $("#addNewBoxes").val("");
       $("#boxQuantity").val("");
-     
+
     }
 
   });
@@ -100,7 +100,7 @@ function mainInventory() {
     type: 'GET',
     url: "http://localhost:3000/api/maininventory",
     success: function (data) {
-      $("#singleVarietalTable").empty();
+      $("#mainInventoryTable").empty();
       for (let i = 0; i < data.length; i++) {
         var itemID = (data[i].id)
         var vintage = (data[i].vintage)
@@ -128,7 +128,7 @@ function mainInventory() {
 
         tr.append(wHouse, vint, kind, actual, shadow, ordered, boxtype)
 
-        $("#singleVarietalTable").append(tr)
+        $("#mainInventoryTable").append(tr)
       }
     }
 
@@ -155,7 +155,7 @@ $("#wineVarietal").change(function () {
       url: "http://localhost:3000/api/oneVarietal/" + varietalType + "",
       success: function (data) {
         console.log("You are getting the info back")
-        $("#singleVarietalTable").empty();
+        $("#mainInventoryTable").empty();
         for (let i = 0; i < data.length; i++) {
           var itemID = (data[i].id)
           var vintage = (data[i].vintage)
@@ -183,7 +183,7 @@ $("#wineVarietal").change(function () {
 
           tr.append(wHouse, vint, kind, actual, shadow, ordered, boxtype)
 
-          $("#singleVarietalTable").append(tr)
+          $("#mainInventoryTable").append(tr)
         }
 
       }
@@ -226,7 +226,7 @@ $("#wineVarietal").change(function () {
 
           tr.append(labName, vint, kind, actual, shadow, ordered, boxtype)
 
-          $("#singleVarietalTable").append(tr)
+          $("#mainInventoryTable").append(tr)
         }
       }
 

@@ -1,15 +1,4 @@
 $(document).ready(function () {
-
-  //toggle on and off the 'add client' box
-
-  $("#nevermind").click(function () {
-    $("#newClientInput").hide();
-  });
-  $("#addNewCustomer").click(function () {
-    $("#newClientInput").show();
-  });
-  //____________________________________________
-
   //populates the customer dropdown
   $.ajax({
     type: 'GET',
@@ -25,55 +14,88 @@ $(document).ready(function () {
 
     }
   });
-  //____________________________________________
 
-  //add a new client
-  $("#newClientSubmit").on("click", function (event) {
-    event.preventDefault();
-    var clientName = $("#clientName").val();
-    var primaryContact = $("#primContact").val();
-    var phoneNumber = $("#phNumber").val();
-    var emailAddress = $("#emailAddress").val();
-    var street = $("#street").val();
-    var city = $("#city").val();
-    var state = $("#state").val();
-    var zipCode = $("#zipCode").val();
-
-    var customerInfo = {
-      "clientName": clientName,
-      "primaryContact": primaryContact,
-      "phone": phoneNumber,
-      "email": emailAddress,
-      "streetAddress": street,
-      "city": city,
-      "ST": state,
-      "zipcode": zipCode
-    }
-    $.ajax({
-      type: 'POST',
-      url: 'http://localhost:3000/api/newCustomer',
-      data: customerInfo,
-      success: function (data) {
-        $("#clientName").val("");
-        $("#primContact").val("");
-        $("#phNumber").val("");
-        $("#emailAddress").val("");
-        $("#street").val("");
-        $("#city").val("");
-        $("#state").val("");
-        $("#zipCode").val("");
-      }
-
-    });
-
-  });
-  //____________________________________________
-
-  //dynamically generate contact info and populate the wine fields
-  // on click, run these two ajax calls and then put the info onto the screen
 
 });
 
+
+//toggle on and off the 'add client' box
+
+$("#nevermind").click(function () {
+  $("#newClientInput").hide();
+});
+$("#addNewCustomer").click(function () {
+  $("#newClientInput").show();
+});
+//____________________________________________
+
+
+//add a new client
+$("#newClientSubmit").on("click", function (event) {
+  event.preventDefault();
+  var clientName = $("#clientName").val();
+  var primaryContact = $("#primContact").val();
+  var phoneNumber = $("#phNumber").val();
+  var emailAddress = $("#emailAddress").val();
+  var street = $("#street").val();
+  var city = $("#city").val();
+  var state = $("#state").val();
+  var zipCode = $("#zipCode").val();
+
+  var customerInfo = {
+    "clientName": clientName,
+    "primaryContact": primaryContact,
+    "phone": phoneNumber,
+    "email": emailAddress,
+    "streetAddress": street,
+    "city": city,
+    "ST": state,
+    "zipcode": zipCode
+  }
+  $.ajax({
+    type: 'POST',
+    url: 'http://localhost:3000/api/newCustomer',
+    data: customerInfo,
+    success: function (data) {
+      $("#clientName").val("");
+      $("#primContact").val("");
+      $("#phNumber").val("");
+      $("#emailAddress").val("");
+      $("#street").val("");
+      $("#city").val("");
+      $("#state").val("");
+      $("#zipCode").val("");
+    }
+
+  });
+
+
+
+});
+function winebox() {
+  switch (salesVarietalDropdown) {
+    case "Sauvignon Blanc":
+      boxType = "WRT";
+      break;
+    case "Chardonnay":
+      boxType = "WRU";
+      break;
+    case "Pinot Noir":
+      boxType = "WRU";
+      break;
+    case "Red Blend":
+      boxType = "WBAJA";
+      break;
+    case "Zinfandel":
+      boxType = "WBAJA";
+      break;
+    case "Merlot":
+      boxType = "WBAJA";
+      break;
+    case "Cabernet":
+      boxType = "WBAJA";
+  }
+}
 
 // input form for adding a new sale or promise
 $("#addNewSale").on("click", function (event) {
@@ -81,37 +103,42 @@ $("#addNewSale").on("click", function (event) {
   var salesAccountName = $("#salesAccountName").val();
   var salesVintage = $("#salesVintage").val();
   var salesQuantity = $("#salesQuantity").val();
-  var salesVarietalDropdown = $("#salesVarietalDropdown").val(); 
+  var salesVarietalDropdown = $("#salesVarietalDropdown").val();
   var actualPromise = $("#actualPromise").val();
-console.log("varietal picked: ",salesVarietalDropdown);
+  console.log("varietal picked: ", salesVarietalDropdown);
   var newSaleInfo;
-if (actualPromise === "Actual") {
-  var newSaleInfo = {
-    "accountName": salesAccountName,
-    "vintage": salesVintage,
-    "varietal": salesVarietalDropdown,
-    "actual": salesQuantity
-  }
-
-} else {
-  var newSaleInfo = {
-    "accountName": salesAccountName,
-    "vintage": salesVintage,
-    "varietal": salesVarietalDropdown,
-    "promised": salesQuantity
-  }
+  var boxType;
+  console.log("box type", boxType);
  
+  if (actualPromise === "Actual") {
+    winebox(boxType)
+    var newSaleInfo = {
+      "accountName": salesAccountName,
+      "vintage": salesVintage,
+      "varietal": salesVarietalDropdown,
+      "actualOrdered": salesQuantity,
+      "boxType": boxType
+    }
+  } else {
+    winebox(boxType)
+    var newSaleInfo = {
+      "accountName": salesAccountName,
+      "vintage": salesVintage,
+      "varietal": salesVarietalDropdown,
+      "promised": salesQuantity,
+      "boxType": boxType
+    }
+  }
 
-}
 
-console.log(newSaleInfo);
 
+  console.log(newSaleInfo);
   $.ajax({
     type: 'POST',
     url: 'http://localhost:3000/api/orders',
     data: newSaleInfo,
     success: function (data) {
-     console.log("you posted new info");
+      console.log("you posted new info");
     }
 
   })
@@ -124,14 +151,55 @@ console.log(newSaleInfo);
 });
 //____________________________________________
 
+// update client notes
+$("#updateNotes").on("click", function (event) {
 
+  // event.preventDefault();
+  var clientNote = $("#clientNotes").val();
+  var noteID = $("#clientNotes").attr("data-id")
+  // console.log("Note ID for PUT: ", noteID);
+
+
+  var note = {
+    "notes": clientNote,
+    "id": noteID
+  }
+  $.ajax({
+    type: 'PUT',
+    url: 'http://localhost:3000/api/customerinfo',
+    data: note,
+    success: function (data) {
+      console.log("note updated");
+    }
+
+  });
+
+});
+//____________________________________________
 
 
 //grab #id from dropdown
-$("#customerNames").change(function () {
+$("#customerNames").change(function (dataname) {
   var nameValue = $("select.custom-select").find(':selected').data('name');
+  $("#salesAccountName").attr("value",nameValue)
+  $("#newAccountName").attr("value",nameValue)
   console.log("name selected: ", nameValue)
-  //call and get specific customer orders : populate table
+
+
+  $("#clientNotes").text("")
+  one(dataname);
+  two(dataname);
+
+  //to unjumble this mess, just erase the function parts and put both function bodies back inside of here... also erase the nameValues from the function and dataname from this function
+  //____________________________________________
+});
+
+
+//call and get specific customer orders : populate table
+function one(data) {
+  nameValue = data.originalEvent.target.value
+  console.log("data: ", data.originalEvent.target.value);
+
   $.ajax({
     type: 'GET',
     url: "http://localhost:3000/api/oneCustomer/" + nameValue + "",
@@ -160,20 +228,19 @@ $("#customerNames").change(function () {
         clientPromised.attr("data-id", custId);
         boxtype.attr("data-id", custId);
 
-
-
         tr.append(vint, kind, actual, clientPromised, boxtype)
-
         $("#clientWines").append(tr)
-
-
-
-
       }
     }
 
   })
-  // call and get specific customer contact info : populate card
+
+}
+// call and get specific customer contact info : populate card
+function two(data) {
+  console.log("2data: ", data.originalEvent.target.value);
+  nameValue = data.originalEvent.target.value
+
   $.ajax({
     type: 'GET',
     url: "http://localhost:3000/api/customerContact/" + nameValue + "",
@@ -181,7 +248,8 @@ $("#customerNames").change(function () {
       console.log("contact data: ", data)
       for (let i = 0; i < data.length; i++) {
         var clientName = data[i].clientName;
-        console.log("client namesssss: ", clientName)
+        var clientID = data[i].id
+        console.log("client id: ", clientID)
         var primaryContact = data[i].primaryContact;
         var phoneNumber = data[i].phone;
         var email = data[i].email;
@@ -189,37 +257,51 @@ $("#customerNames").change(function () {
         var city = data[i].city;
         var st = data[i].ST;
         var zipcode = data[i].zipcode;
+        var notes = data[i].notes
 
+        console.log(data);
+
+        $("#clientNotes").attr("data-id", clientID)
         $("#customerName").text(clientName)
         $("#primaryContact").text(primaryContact)
         $("#phoneNumber").text(phoneNumber)
         $("#email").text(email)
         $("#address").text(street)
         $("#address").append("<br>")
-        $("#address").append(city + ", " + st + " " + zipcode)
-
+        $("#address").append(city + ", " + st + " " + zipcode);
+        $("#clientNotes").val(notes)
       }
     }
 
   })
-  //____________________________________________
-});
-//add a new wine
-$("#addNewWine").on("click", function (event) {
+}
 
+function varName(nameVal){
+  // $("#salesAccountName").attr("value",nameValue)
+  // $("#newAccountName").attr("value",nameValue)
+}
+$("#newWineInput").change(function (data) {
+  var varietalType = $("select.varietalDropdown").find(':selected').data('name');
+  console.log("varietal selected: ", varietalType)
+  // console.log(data)
+  // varName()
+  //add a new wine
+});
+  $("#addNewWine").on("click", function (event) {
   event.preventDefault();
   var accountName = $("#newAccountName").val();
   var newVintage = $("#newVintage").val();
-  var newVarietal = $("#newVarietal").val();
+  var salesVarietalDropdown = varietalType
+  console.log("nv", salesVarietalDropdown);
   var quantOrderd = $("#quantOrdered").val();
   var quantPromised = $("#quantPromised").val();
-  var boxType = $("#boxType").val();
-
-
+  var boxType = winebox(salesVarietalDropdown) 
+  
+  
   var newWineInfo = {
     "accountName": accountName,
     "vintage": newVintage,
-    "varietal": newVarietal,
+    "varietal": salesVarietalDropdown,
     "actualOrdered": quantOrderd,
     "promised": quantPromised,
     "boxType": boxType
@@ -236,8 +318,9 @@ $("#addNewWine").on("click", function (event) {
       $("#quantPromised").val("");
       $("#newBoxType").val("");
     }
-
+    
   });
+  
 
-});
+})
   //____________________________________________
