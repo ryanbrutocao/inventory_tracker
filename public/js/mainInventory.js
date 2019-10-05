@@ -123,7 +123,7 @@ function mainInventory() {
         var ordered = $("<td> -- </td>")
         var vint = $("<td>" + vintage + "</td>")
         var kind = $("<td>" + varietal + "</td>")
-        var actual = $("<td>" + actualInventory + "</td>")
+        var actual = $("<button><td>" + actualInventory + "</td></button>").addClass("changeValue")
         var shadow = $("<td>" + shadowInventory + "</td>")
         var boxtype = $("<td>" + boxType + "</td>")
 
@@ -143,6 +143,11 @@ function mainInventory() {
   })
 }
 //____________________________________________
+////Click event to change actual inventory on mainInventory
+
+$(document).on('click', '.changeValue', function() { 
+  
+});
 
 //grabbing all info for a specific wine that is chosen from dropdown menu.
 $("#wineVarietal").change(function () {
