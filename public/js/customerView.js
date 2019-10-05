@@ -293,7 +293,7 @@ $("#newWineInput").change(function (data) {
   var newVintage = $("#newVintage").val();
   var salesVarietalDropdown = varietalType
   console.log("nv", salesVarietalDropdown);
-  var quantOrderd = $("#quantOrdered").val();
+  var labelsAdded = $("#labelsAdded").val();
   var quantPromised = $("#quantPromised").val();
   var boxType = winebox(salesVarietalDropdown) 
   
@@ -302,15 +302,16 @@ $("#newWineInput").change(function (data) {
     "accountName": accountName,
     "vintage": newVintage,
     "varietal": salesVarietalDropdown,
-    "actualOrdered": quantOrderd,
     "promised": quantPromised,
+    "labelsLeft": labelsAdded,
     "boxType": boxType
   }
   $.ajax({
     type: 'POST',
-    url: 'http://localhost:3000/api/orders',
+    url: 'http://localhost:3000/api/labels',
     data: newWineInfo,
     success: function (data) {
+      console.log("You've added a new wine to labels")
       $("#newAccountName").val("");
       $("#newVintage").val("");
       $("#newVarietal").val("");
