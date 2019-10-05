@@ -49,7 +49,7 @@ CREATE TABLE orders (
 	actualOrdered INTEGER(5),
 	promised INTEGER(5),
 	boxType VARCHAR(100),
-	notes VARCHAR(200),
+	-- notes VARCHAR(200),
 	updatedAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
     createdAt TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
 	PRIMARY KEY (id)

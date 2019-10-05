@@ -1,3 +1,16 @@
+{{!-- client notes area --}}
+<div class="input-group">
+  <div class="input-group-prepend">
+    <span>
+    <span class="input-group-text">Client Notes   
+     <br> <button id="updateNotes">update</button>
+      </span>
+    </span>
+  </div>
+  <textarea id="clientNotes" class="form-control" aria-label="Client Notes"></textarea>
+</div>
+<hr>
+
 {{!-- Add a new wine to the Orders table --}}
 <div id="newSalesOrder">
   Account Name<br>
@@ -18,7 +31,7 @@
     <option data-name="Cabernet">Cabernet</option>
   </select>
   <br>
-   Quantity:<br>
+  Quantity:<br>
   <input type="text" id="salesQuantity" value="">
   <br>
   Ordered Actual or promised toggle:<br>
@@ -31,14 +44,7 @@
 </div>
 <button id="addNewSale">Add Sale</button>
 
-
-<div class="input-group mb-3">
-  <div class="input-group-prepend">
-    <label class="input-group-text" for="wineVarietal">Varietal</label>
-  </div>
-  {{!-- pulled from here --}}
-</div>
-
+<hr>
 
 
 {{!-- Add a new wine to the Orders table --}}
@@ -49,8 +55,17 @@
   Vintage:<br>
   <input type="text" id="newVintage" value="">
   <br>
-  Varietal:<br>
-  <input type="text" id="newVarietal" value="">
+   Varietal:<br>
+  <select class="varietalDropdown" id="varietalDropdown">
+    <option selected> Select ...</option>
+    <option data-name="Sauvignon Blanc">Sauvignon Blanc</option>
+    <option data-name="Chardonnay">Chardonnay</option>
+    <option data-name="Pinot Noir">Pinot Noir</option>
+    <option data-name="Red Blend">Red Blend</option>
+    <option data-name="Zinfandel">Zinfandel</option>
+    <option data-name="Merlot">Merlot</option>
+    <option data-name="Cabernet">Cabernet</option>
+  </select>
   <br>
   Ordered:<br>
   <input type="text" id="quantOrdered" value="">
@@ -58,12 +73,13 @@
   Promised:<br>
   <input type="text" id="quantPromised" value="">
   <br>
-  Box Type:<br>
+  {{!-- Box Type:<br>
   <input type="text" id="newBoxType" value="">
-  <br>
+  <br> --}}
 </div>
 <button id="addNewWine">add new wine</button>
 
+<hr>
 
 {{!-- choose customer dropdown --}}
 <div class="jumbotron">
@@ -81,7 +97,7 @@
   </div>
 
 </div>
-
+<hr>
 
 <div class="card">
   <div class="card-header">
@@ -98,6 +114,8 @@
 
   </div>
 </div>
+<hr>
+
 {{!-- new customer display that shows/hides --}}
 <button id="addNewCustomer" data-val="off">Add New Customer</button>
 
@@ -129,9 +147,10 @@
   <input type="submit" value="Submit" id="newClientSubmit">
   <button id="nevermind">Nevermind!</button>
 </div>
+<hr>
 
 
-
+{{!-- Display table for viewing wine inventory --}}
 <table class="table table-striped table-dark">
   <thead>
     <tr>

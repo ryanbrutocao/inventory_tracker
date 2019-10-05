@@ -16,13 +16,13 @@ module.exports = function (sequelize, DataTypes) {
       },
       actualInventory: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: "none"
+        allowNull: true,
+        defaultValue: 0
       },
       shadowInventory: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: "none"
+        allowNull: true,
+        defaultValue: 0
       },
       boxType: {
         type: DataTypes.TEXT,

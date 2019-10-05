@@ -32,11 +32,11 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         defaultValue: "none"
       },
-      notes: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-        defaultValue: "none"
-      },
+      // notes: {
+      //   type: DataTypes.TEXT,
+      //   allowNull: false,
+      //   defaultValue: "none"
+      // },
       createdAt: {
         field: "createdAt",
         type: Sequelize.DATE
