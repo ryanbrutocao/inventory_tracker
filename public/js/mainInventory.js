@@ -28,8 +28,8 @@ $(document).ready(function () {
 //add a additional boxes to inventory
 $("#additionalBoxes").on("click", function (event) {
   event.preventDefault();
-  var boxType = $("select").find(':selected').data('name');
-  var boxToString = boxType.toString()
+  var boxType = $("select.boxDrop").find(':selected').data('name');
+  // var boxToString = boxType.toString()
   var boxQuantity = $("#boxQuantity").val();
   var parseQuant = parseInt(boxQuantity)
   console.log(typeof boxType);
@@ -38,7 +38,7 @@ $("#additionalBoxes").on("click", function (event) {
 
 
   var boxInfo = {
-    "boxType": boxToString,
+    "boxType": boxType,
     "onHand": parseQuant
   }
   $.ajax({
@@ -60,12 +60,16 @@ $("#additionalBoxes").on("click", function (event) {
 
 //add a new client
 $("#addNewWine").on("click", function (event) {
-  event.preventDefault();
+  // event.preventDefault();
   var newVintage = $("#newVintage").val();
   var newVarietal = $("#newVarietal").val();
   var currentInventory = $("#currentInventory").val();
   var shadowInventory = $("#shadowInventory").val();
   var boxType = $("#boxType").val();
+  if (boxType === 'Select ...') {
+    alert('Need to set box type.')
+    return;
+  }
   console.log("box Type: ", boxType)
 
   var newWineInfo = {
@@ -87,8 +91,12 @@ $("#addNewWine").on("click", function (event) {
       $("#shadowInventory").val("");
       $("#boxType").val("");
     }
-
+    
+  }).then(function() {
+    mainInventory();
   });
+  
+  
 
 });
 //____________________________________________
