@@ -146,7 +146,7 @@ function mainInventory() {
 ////Click event to change actual inventory on mainInventory
 
 $(document).on('click', '.changeValue', function() { 
-  
+  $("#addValue-modal").modal("toggle")
 });
 
 //grabbing all info for a specific wine that is chosen from dropdown menu.
