@@ -1,3 +1,29 @@
 .list-group-item {
   line-height: 2.5;
 }
+
+.title {
+  height: 150px;
+  width: 500px;
+  background-color: red;
+  display: inline-block;
+  font-size: 50px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 150px;
+}
+
+.nav {
+  display: inline-block;
+  width: 900px;
+  /* margin: 0px; */
+  text-align: center;
+}
+
+li.nav-item {
+  display: inline-block;
+}
+
+.changeValue {
+  margin-left: 40px;
+}

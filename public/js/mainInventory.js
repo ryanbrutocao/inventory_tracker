@@ -150,7 +150,7 @@ function mainInventory() {
 $(document).on('click', '.changeValue', function(e) { 
   $("#addValue-modal").modal("toggle")
   var id = $(this).data('id')
-  console.log($(this).data('id'))
+  console.log("id: " + $(this).data('id'))
   var vintage = $(this).siblings()[1].innerHTML
   var varietal = $(this).siblings()[2].innerHTML
 
@@ -167,7 +167,7 @@ $(document).on('click', '.changeValue', function(e) {
       url: 'http://localhost:3000/api/orders',
       success: function (data) {
        
-       //If wine varietal and vintage match add to the promised amount
+      //  If wine varietal and vintage match add to the promised amount
        for (var i = 0; i < data.length; i++) {
           if (data[i].vintage === vintage && data[i].varietal === varietal) {
             newShadow += Number(data[i].promised)
