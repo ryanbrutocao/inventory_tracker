@@ -1,4 +1,4 @@
-var moment =
+
 
 $(document).ready(function () {
   //populates the customer dropdown

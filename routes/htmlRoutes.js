@@ -13,6 +13,10 @@ module.exports = function (app) {
   app.get("/home", function (req, res) {
     db.orders.findAll({}).then(function (results) {
       res.render("homePage", { results: results });
+      
+  app.get("/", function (req, res) {
+    db.mainInventory.findAll({}).then(function (results) {
+      res.render("mainInventory", { results: results });
 
     });
   });
