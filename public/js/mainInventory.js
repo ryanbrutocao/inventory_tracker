@@ -150,9 +150,9 @@ $("#wineVarietal").change(function () {
   console.log("Varietal selected: ", varietalType)
 
   if (varietalType === "allWarehouse") {
-    mainInventory()
-  } else {
-    individualWines()
+    mainInventory(varietalType)
+  }  else {
+    individualWines(varietalType)
   };
 
   //call and get specific wine from warehouse : populate table
