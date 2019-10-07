@@ -1,5 +1,5 @@
 var Sequelize = require("sequelize");
-
+var moment = require("moment")
 module.exports = function(sequelize, DataTypes) {
   var orders = sequelize.define(
     "orders",
@@ -39,7 +39,7 @@ module.exports = function(sequelize, DataTypes) {
       // },
       createdAt: {
         field: "createdAt",
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       }
     },
     {

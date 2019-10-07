@@ -1,3 +1,5 @@
+var moment =
+
 $(document).ready(function () {
   //populates the customer dropdown
   $.ajax({
@@ -212,13 +214,13 @@ function salesData(data) {
         var actualOrdered = data[i].actualOrdered;
         var promised = data[i].promised;
         var orderDate = data[i].createdAt
-
+        var dateOnly =  orderDate.split("T")[0];
         var tr = $("<tr>")
         var vint = $("<td>" + vintage + "</td>")
         var kind = $("<td>" + varietal + "</td>")
         var actual = $("<td>" + actualOrdered + "</td>")
         var promisedWine = $("<td>" + promised + "</td>")
-        var orderedDate = $("<td>" + orderDate + "</td>")
+        var orderedDate = $("<td>" + dateOnly + "</td>")
 
         tr.append(vint, kind, actual, promisedWine, orderedDate)
         $("#accountSales").append(tr)
