@@ -120,7 +120,7 @@ function mainInventory() {
         var tr = $("<tr>")
         var th = $("<th scope='row'></th>")
         var wHouse = $("<td>Warehouse</td>")
-        var ordered = $("<td> -- </td>")
+        // var ordered = $("<td> -- </td>")
         var vint = $("<td>" + vintage + "</td>")
         var kind = $("<td>" + varietal + "</td>")
         var actual = $("<td>" + actualInventory + "</td>")
@@ -134,7 +134,7 @@ function mainInventory() {
         boxtype.attr("data-id", itemID);
 
 
-        tr.append(wHouse, vint, kind, actual, shadow, ordered, boxtype)
+        tr.append(wHouse, vint, kind, actual, shadow, boxtype)
 
         $("#mainInventoryTable").append(tr)
       }
@@ -175,7 +175,7 @@ $("#wineVarietal").change(function () {
 
           var tr = $("<tr>")
           var th = $("<th scope='row'></th>")
-          var ordered = $("<td> -- </td>")
+          // var ordered = $("<td> -- </td>")
           var wHouse = $("<td>Warehouse</td>")
           var vint = $("<td>" + vintage + "</td>")
           var kind = $("<td>" + varietal + "</td>")
@@ -189,7 +189,7 @@ $("#wineVarietal").change(function () {
           shadow.attr("data-id", itemID);
           boxtype.attr("data-id", itemID);
 
-          tr.append(wHouse, vint, kind, actual, shadow, ordered, boxtype)
+          tr.append(wHouse, vint, kind, actual, shadow, boxtype)
 
           $("#mainInventoryTable").append(tr)
         }
@@ -218,7 +218,7 @@ $("#wineVarietal").change(function () {
           var tr = $("<tr>")
           var th = $("<th scope='row'></th>")
           var wHouse = $("<td>Warehouse</td>")
-          var ordered = $("<td> -- </td>")
+          // var ordered = $("<td> -- </td>")
           var labName = $("<td>" + labelName + "</td>")
           var vint = $("<td>" + vintage + "</td>")
           var kind = $("<td>" + varietal + "</td>")
@@ -232,7 +232,7 @@ $("#wineVarietal").change(function () {
           shadow.attr("data-id", itemID);
           boxtype.attr("data-id", itemID);
 
-          tr.append(labName, vint, kind, actual, shadow, ordered, boxtype)
+          tr.append(labName, vint, kind, actual, shadow, boxtype)
 
           $("#mainInventoryTable").append(tr)
         }
