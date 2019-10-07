@@ -106,21 +106,21 @@ $("#addNewSale").on("click", function (event) {
   var salesAccountName = $("#salesAccountName").val();
   var salesVintage = $("#salesVintage").val();
   var salesQuantity = $("#salesQuantity").val();
-  var salesVarietalDropdown = $("select.zebra").find(':selected').data('name');
+  var salesVarietalDropdown = $("select.newSale").find(':selected').data('name');
   console.log("varietal picked: ", salesVarietalDropdown);
   console.log("varietal picked: ", typeof salesVarietalDropdown);
   var actualPromise = $("#actualPromise").val();
   var newSaleInfo;
   var boxType;
   console.log("box type", boxType);
- 
+
   if (actualPromise === "Actual") {
     var newSaleInfo = {
       "accountName": salesAccountName,
       "vintage": salesVintage,
       "varietal": salesVarietalDropdown,
       "actualOrdered": salesQuantity,
-      "boxType":     winebox(salesVarietalDropdown)
+      "boxType": winebox(salesVarietalDropdown)
     }
   } else {
     var newSaleInfo = {
@@ -128,7 +128,7 @@ $("#addNewSale").on("click", function (event) {
       "vintage": salesVintage,
       "varietal": salesVarietalDropdown,
       "promised": salesQuantity,
-      "boxType":     winebox(salesVarietalDropdown)
+      "boxType": winebox(salesVarietalDropdown)
     }
   }
 
@@ -144,11 +144,10 @@ $("#addNewSale").on("click", function (event) {
     }
 
   })
-  // .then(res => {
-  //   console.log ("success")
-  // }).catch(err => {
-  //   console.log(err);
-  // });
+    .then(function () {
+   salesData(salesAccountName)
+    });
+
 
 });
 //____________________________________________
@@ -160,7 +159,6 @@ $("#updateNotes").on("click", function (event) {
   var clientNote = $("#clientNotes").val();
   var noteID = $("#clientNotes").attr("data-id")
   // console.log("Note ID for PUT: ", noteID);
-
 
   var note = {
     "notes": clientNote,
@@ -183,76 +181,174 @@ $("#updateNotes").on("click", function (event) {
 //grab #id from dropdown
 $("#customerNames").change(function (dataname) {
   var nameValue = $("select.custom-select").find(':selected').data('name');
-  $("#salesAccountName").attr("value",nameValue)
+  $("#salesAccountName").attr("value", nameValue)
   $("#newAccountName").attr("value",nameValue)
   console.log("name selected: ", nameValue)
 
 
   $("#clientNotes").text("")
-  one(dataname);
-  two(dataname);
-
-  //to unjumble this mess, just erase the function parts and put both function bodies back inside of here... also erase the nameValues from the function and dataname from this function
+  // one(nameValue);
+  two(nameValue);
+  salesData(nameValue)
+  inventoryData(nameValue)
   //____________________________________________
 });
 
 
-//call and get specific customer orders : populate table
-function one(data) {
-  nameValue = data.originalEvent.target.value
-  console.log("data: ", data.originalEvent.target.value);
-        $("#clientWines").empty()
-
-  $.ajax({
+function salesData(data) {
+  nameValue = data;
+  $("#accountSales").empty()
+  $.ajax({ //pulling from orders
     type: 'GET',
     url: "http://localhost:3000/api/oneCustomer/" + nameValue + "",
     success: function (data) {
+      // console.log("correctly ordered data: ", data);
+
       for (let i = 0; i < data.length; i++) {
-        var accountName = (data[i].accountName)
-        var vintage = (data[i].vintage)
-        var varietal = (data[i].varietal)
-        var actualOrdered = (data[i].actualOrdered)
-        var promised = (data[i].promised)
-        var boxType = (data[i].boxType)
-        var notes = (data[i].notes)
-        var custId = (data[i].id)
+        // console.log("data length: ",data.length);
+
+        var vintage = data[i].vintage;
+        var varietal = data[i].varietal;
+        var actualOrdered = data[i].actualOrdered;
+        var promised = data[i].promised;
+        var orderDate = data[i].createdAt
+
         var tr = $("<tr>")
-        var th = $("<th scope='row'></th>")
-        var clientName = $("<td>" + accountName + "</td>")
         var vint = $("<td>" + vintage + "</td>")
         var kind = $("<td>" + varietal + "</td>")
         var actual = $("<td>" + actualOrdered + "</td>")
-        var clientPromised = $("<td>" + promised + "</td>")
-        var boxtype = $("<td>" + boxType + "</td>")
+        var promisedWine = $("<td>" + promised + "</td>")
+        var orderedDate = $("<td>" + orderDate + "</td>")
 
-        vint.attr("data-id", custId);
-        kind.attr("data-id", custId);
-        actual.attr("data-id", custId);
-        clientPromised.attr("data-id", custId);
-        boxtype.attr("data-id", custId);
-
-        tr.append(vint, kind, actual, clientPromised, boxtype)
-        $("#clientWines").append(tr)
+        tr.append(vint, kind, actual, promisedWine, orderedDate)
+        $("#accountSales").append(tr)
       }
+
     }
-
   })
-
 }
+
+
+
+function inventoryData(data) {
+  nameValue = data;
+  $("#accountInventory").empty()
+  $.ajax({//[grabbing label info with this AJAX call...
+          type: 'GET',
+          url: "http://localhost:3000/api/labels/" + nameValue + "",
+          success: function (dataHere) {
+            console.log("dataHere: ", dataHere);
+            for (let i = 0; i < dataHere.length; i++) {
+
+              var accountName = dataHere[i].accountName;
+              var vintage = dataHere[i].vintage;
+              var varietal = dataHere[i].varietal;
+              var promised = dataHere[i].promised;
+              var labelsLeft = dataHere[i].labelsLeft;
+
+              var tr = $("<tr>")
+              var account = $("<td>" + accountName + "</td>")
+              var vint = $("<td>" + vintage + "</td>");
+              var wineVarietal = $("<td>" + varietal + "</td>")
+              var promisedWine = $("<td>" + promised + "</td>");
+              var labelsRemain = $("<td>" + labelsLeft + "</td>")
+              
+              
+              tr.append(account, vint, wineVarietal, promisedWine, labelsRemain)
+              $("#accountInventory").append(tr)
+            }
+          }
+})
+}
+
+
+
+
+
+
+
+
+
+
+//call and get specific customer orders : populate table
+// function one(data) {
+//   nameValue = data;
+
+//   $("#clientWines").empty()
+
+//   var th = $("<th scope='row'>")
+//   $.ajax({ //pulling from orders
+//     type: 'GET',
+//     url: "http://localhost:3000/api/oneCustomer/" + nameValue + "",
+//     success: function (data) {
+//       console.log("correctly ordered data: ", data);
+
+//       for (let i = 0; i < data.length; i++) {
+//         // console.log("data length: ",data.length);
+
+//         var vintage = (data[i].vintage)
+//         var varietal = (data[i].varietal)
+//         var actualOrdered = (data[i].actualOrdered)
+
+//         var vint = $("<td>" + vintage + "</td>")
+//         var kind = $("<td>" + varietal + "</td>")
+//         var actual = $("<td>" + actualOrdered + "</td>")
+
+
+//         labelsTable(vintage, varietal, nameValue, vint, kind, actual)
+//       }
+
+//     }
+//   }).then(function () {
+//   })
+//   function labelsTable(vintage, varietal, nameValue, vint, kind, actual) {
+//     var tr = $("<tr>")
+
+//     console.log("whats this vintage?", vintage);
+//     console.log("whats this varietal?", varietal);
+//     $.ajax({//[grabbing label info with this AJAX call...
+//       type: 'GET',
+//       url: "http://localhost:3000/api/labels/" + nameValue + "/" + vintage + "/" + varietal + "",
+//       success: function (dataHere) {
+
+//         console.log("second data(dataHere): ", dataHere);
+//         console.log("zebracat2Labels: ", dataHere[0].labelsLeft);
+//         labelsLeft = (dataHere[0].labelsLeft)
+//         promised = (dataHere[0].promised)
+
+//         console.log("GET promised: ", promised);
+//         var labelsRemain = $("<td>" + labelsLeft + "</td>")
+//         var promisedWine = $("<td>" + promised + "</td>");
+
+//         tr.append(vint, kind, actual, promisedWine, labelsRemain)
+//       }
+//     }).then(function () {
+
+//       console.log("something here")
+//     })
+//     $("#clientWines").append(tr)
+//   }
+// }
+
+
+
+
 // call and get specific customer contact info : populate card
 function two(data) {
-  console.log("2data: ", data.originalEvent.target.value);
-  nameValue = data.originalEvent.target.value
+  // console.log("2data: ", data.originalEvent.target.value);
+  // nameValue = data.originalEvent.target.value
+  nameValue = data;
+
 
   $.ajax({
     type: 'GET',
     url: "http://localhost:3000/api/customerContact/" + nameValue + "",
     success: function (data) {
-      console.log("contact data: ", data)
+      // console.log("contact data: ", data)
       for (let i = 0; i < data.length; i++) {
         var clientName = data[i].clientName;
         var clientID = data[i].id
-        console.log("client id: ", clientID)
+        // console.log("client id: ", clientID)
         var primaryContact = data[i].primaryContact;
         var phoneNumber = data[i].phone;
         var email = data[i].email;
@@ -262,7 +358,7 @@ function two(data) {
         var zipcode = data[i].zipcode;
         var notes = data[i].notes
 
-        console.log(data);
+        // console.log(data);
 
         $("#clientNotes").attr("data-id", clientID)
         $("#customerName").text(clientName)
@@ -279,7 +375,7 @@ function two(data) {
   })
 }
 
-function varName(nameVal){
+function varName(nameVal) {
   // $("#salesAccountName").attr("value",nameValue)
   // $("#newAccountName").attr("value",nameValue)
 }
@@ -290,7 +386,7 @@ $("#newWineInput").change(function (data) {
   // varName()
   //add a new wine
 });
-  $("#addNewWine").on("click", function (event) {
+$("#addNewWine").on("click", function (event) {
   event.preventDefault();
   var accountName = $("#newAccountName").val();
   var newVintage = $("#newVintage").val();
@@ -298,9 +394,9 @@ $("#newWineInput").change(function (data) {
   console.log("nv", salesVarietalDropdown);
   var labelsAdded = $("#labelsAdded").val();
   var quantPromised = $("#quantPromised").val();
-  var boxType = winebox(salesVarietalDropdown) 
-  
-  
+  var boxType = winebox(salesVarietalDropdown)
+
+
   var newWineInfo = {
     "accountName": accountName,
     "vintage": newVintage,
@@ -322,9 +418,12 @@ $("#newWineInput").change(function (data) {
       $("#quantPromised").val("");
       $("#newBoxType").val("");
     }
-    
+
+  }).then(function () {
+    inventoryData(accountName)
   });
-  
+
+
 
 })
   //____________________________________________

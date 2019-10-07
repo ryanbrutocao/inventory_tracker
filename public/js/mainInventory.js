@@ -1,7 +1,7 @@
 $(document).ready(function () {
   // populates the table on load
   mainInventory();
-
+boxes()
   // //populates the customer dropdown -- code on mainInventory.hbs is also commented out.
   // $.ajax({
   //   type: 'GET',
@@ -23,6 +23,29 @@ $(document).ready(function () {
 
 
 })
+
+//populate all boxes into table
+
+function boxes(){
+  $.ajax({
+    type: 'GET',
+    url: "http://localhost:3000/api/boxes",
+    success: function (data) {
+      $("#mainBoxes").empty();
+      console.log("box data: ",data);
+      for (let i = 0; i < data.length; i++) {
+        var tr = $("<tr>")
+        var box = data[i].boxType
+        var volume = data[i].onHand
+        var boxes = $("<td>" + box + "</td>")
+        var number = $("<td>" + volume + "</td>")
+        tr.append(boxes, number)
+$("#mainBoxes").append(tr)
+      }
+}
+ })
+}
+
 
 
 //add a additional boxes to inventory
@@ -52,6 +75,8 @@ $("#additionalBoxes").on("click", function (event) {
 
     }
 
+  }).then(function(){
+    boxes()
   });
 
 });
@@ -120,7 +145,7 @@ function mainInventory() {
         var tr = $("<tr>")
         var th = $("<th scope='row'></th>")
         var wHouse = $("<td>Warehouse</td>")
-        var ordered = $("<td> -- </td>")
+        // var ordered = $("<td> -- </td>")
         var vint = $("<td>" + vintage + "</td>")
         var kind = $("<td>" + varietal + "</td>")
         var actual = $("<td>" + actualInventory + "</td>")
@@ -134,7 +159,7 @@ function mainInventory() {
         boxtype.attr("data-id", itemID);
 
 
-        tr.append(wHouse, vint, kind, actual, shadow, ordered, boxtype)
+        tr.append(wHouse, vint, kind, actual, shadow, boxtype)
 
         $("#mainInventoryTable").append(tr)
       }
@@ -150,9 +175,9 @@ $("#wineVarietal").change(function () {
   console.log("Varietal selected: ", varietalType)
 
   if (varietalType === "allWarehouse") {
-    mainInventory()
-  } else {
-    individualWines()
+    mainInventory(varietalType)
+  }  else {
+    individualWines(varietalType)
   };
 
   //call and get specific wine from warehouse : populate table
@@ -175,7 +200,7 @@ $("#wineVarietal").change(function () {
 
           var tr = $("<tr>")
           var th = $("<th scope='row'></th>")
-          var ordered = $("<td> -- </td>")
+          // var ordered = $("<td> -- </td>")
           var wHouse = $("<td>Warehouse</td>")
           var vint = $("<td>" + vintage + "</td>")
           var kind = $("<td>" + varietal + "</td>")
@@ -189,7 +214,7 @@ $("#wineVarietal").change(function () {
           shadow.attr("data-id", itemID);
           boxtype.attr("data-id", itemID);
 
-          tr.append(wHouse, vint, kind, actual, shadow, ordered, boxtype)
+          tr.append(wHouse, vint, kind, actual, shadow, boxtype)
 
           $("#mainInventoryTable").append(tr)
         }
@@ -218,7 +243,7 @@ $("#wineVarietal").change(function () {
           var tr = $("<tr>")
           var th = $("<th scope='row'></th>")
           var wHouse = $("<td>Warehouse</td>")
-          var ordered = $("<td> -- </td>")
+          // var ordered = $("<td> -- </td>")
           var labName = $("<td>" + labelName + "</td>")
           var vint = $("<td>" + vintage + "</td>")
           var kind = $("<td>" + varietal + "</td>")
@@ -232,7 +257,7 @@ $("#wineVarietal").change(function () {
           shadow.attr("data-id", itemID);
           boxtype.attr("data-id", itemID);
 
-          tr.append(labName, vint, kind, actual, shadow, ordered, boxtype)
+          tr.append(labName, vint, kind, actual, shadow, boxtype)
 
           $("#mainInventoryTable").append(tr)
         }
