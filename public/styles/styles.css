@@ -1,11 +1,21 @@
+body {
+  background-color: #e9ecef;
+}
+
+hr {
+  width: 100%;
+  margin: 0px;
+}
+
 .list-group-item {
   line-height: 2.5;
 }
 
+/************************** Header and Nav ************************/
 .title {
   height: 150px;
   width: 500px;
-  background-color: red;
+  background-color: rgb(164, 30, 30);
   display: inline-block;
   font-size: 50px;
   text-align: center;
@@ -24,6 +34,42 @@ li.nav-item {
   display: inline-block;
 }
 
+.nav-link {
+  font-size: 30px;
+}
+
+/************************Table Area **************************************/
+
+.table-label {
+  font-size: 50px;
+  margin-top: 100px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 .changeValue {
   margin-left: 40px;
+}
+
+/*******************************Input Area *********************************/
+
+/***Select Varietal ******/
+
+div.jumbotron {
+  padding: 0;
+  text-align: center;
+}
+
+.mb-3 {
+  width: 60%;
+  text-align: center;
+  /* margin-left: 300px; */
+  margin: auto;
+}
+
+/*** Add New Wine ***/
+
+.add-wine-label {
+  margin: auto;
+  display: block;
 }

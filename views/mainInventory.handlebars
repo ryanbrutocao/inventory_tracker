@@ -1,38 +1,4 @@
-<div class="jumbotron">
-  <h1><span class="customerName">View By</span></h1> <br>
-
-  {{!-- <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <label class="input-group-text" for="customerNames">Client</label>
-    </div>
-    <select class="custom-select" id="customerNames">
-
-      <option selected> Select ...</option>
-
-    </select>
-  </div> --}}
-
-
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <label class="input-group-text" for="wineVarietal">Varietal</label>
-    </div>
-    <select class="custom-select wine" id="wineVarietal">
-
-      <option selected> Select ...</option>
-      <option data-name="allWarehouse">All Warehouse Wines</option>
-      <option data-name="Sauvignon Blanc">Sauvignon Blanc</option>
-      <option data-name="Chardonnay">Chardonnay</option>
-      <option data-name="Pinot Noir">Pinot Noir</option>
-      <option data-name="Red Blend">Red Blend</option>
-      <option data-name="Zinfandel">Zinfandel</option>
-      <option data-name="Merlot">Merlot</option>
-      <option data-name="Cabernet">Cabernet</option>
-    </select>
-  </div>
-
-
-
+<div class="table-label">Main Inventory</div>
 
 </div>
 <table class="table table-striped table-dark">
@@ -53,25 +19,31 @@
   </tbody>
 </table>
 
+<div class="jumbotron">
+  <h1><span class="customerName">Select by Varietal</span></h1> <br>
 
-{{!-- "update boxes" input field --}}
-Add additional boxes to inventory<br>
-<select class="boxDrop" id="addNewBoxes">
-  <option selected> Select ...</option>
-  <option data-name="WRU">WRU</option>
-  <option data-name="WRT">WRT</option>
-  <option data-name="WBAJA">WBAJA</option>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <label class="input-group-text" for="wineVarietal">Varietal</label>
+    </div>
+    <select class="custom-select wine" id="wineVarietal">
 
-</select>
-Quantity:<br>
-<input type="text" id="boxQuantity" value="">
-<br>
-<button id="additionalBoxes">
-  Add boxes to inventory
-</button>
-<hr>
+      <option selected> Select ...</option>
+      <option data-name="allWarehouse">All Warehouse Wines</option>
+      <option data-name="Sauvignon Blanc">Sauvignon Blanc</option>
+      <option data-name="Chardonnay">Chardonnay</option>
+      <option data-name="Pinot Noir">Pinot Noir</option>
+      <option data-name="Red Blend">Red Blend</option>
+      <option data-name="Zinfandel">Zinfandel</option>
+      <option data-name="Merlot">Merlot</option>
+      <option data-name="Cabernet">Cabernet</option>
+    </select>
+  </div>
+</div>
+  <hr>
 
 {{!-- 'Add new wine' input fields --}}
+<h1 class="add-wine-label"><span class="add-wine-label">Add a New Wine To the Inventory</span></h1> <br>
 <div id="newWineInput">
 
   Vintage:<br>
@@ -110,6 +82,22 @@ Quantity:<br>
   Add Wine
 </button>
 <hr>
+
+{{!-- "update boxes" input field --}}
+Add additional boxes to inventory<br>
+<select class="boxDrop" id="addNewBoxes">
+  <option selected> Select ...</option>
+  <option data-name="WRU">WRU</option>
+  <option data-name="WRT">WRT</option>
+  <option data-name="WBAJA">WBAJA</option>
+
+</select>
+Quantity:<br>
+<input type="text" id="boxQuantity" value="">
+<br>
+<button id="additionalBoxes">
+  Add boxes to inventory
+</button>
 
 
 {{!-- ------------------------------------ --}}
