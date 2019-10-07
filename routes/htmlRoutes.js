@@ -3,15 +3,8 @@ var path = require("path");
 
 module.exports = function (app) {
   // Load index page
-  // app.get("/", function (req, res) {
-  //   db.mainInventory.findAll({}).then(function (results) {
-  //     res.render("homePage", { results: results });
-
-  //   });
-  // });
-
-  app.get("/home", function (req, res) {
-    db.orders.findAll({}).then(function (results) {
+  app.get("/", function (req, res) {
+    db.mainInventory.findAll({}).then(function (results) {
       res.render("homePage", { results: results });
       
   app.get("/", function (req, res) {
@@ -37,16 +30,16 @@ module.exports = function (app) {
 
 
   // Load example page and pass in an example by id
-  // app.get("/example/:id", function (req, res) {
-  //   db.mainInventory.findOne({ where: { wine: req.params.id } }).then(function (
-  //     dbExample
-  //   ) {
-  //     console.log(dbExample.dataValues);
-  //     res.render("example", {
-  //       example: dbExample
-  //     });
-  //   });
-  // });
+  app.get("/example/:id", function (req, res) {
+    db.mainInventory.findOne({ where: { wine: req.params.id } }).then(function (
+      dbExample
+    ) {
+      console.log(dbExample.dataValues);
+      res.render("example", {
+        example: dbExample
+      });
+    });
+  });
 
   // Render 404 page for any unmatched routes
   app.get("*", function (req, res) {
