@@ -1,7 +1,7 @@
 $(document).ready(function () {
   // populates the table on load
   mainInventory();
-
+boxes()
   // //populates the customer dropdown -- code on mainInventory.hbs is also commented out.
   // $.ajax({
   //   type: 'GET',
@@ -23,6 +23,29 @@ $(document).ready(function () {
 
 
 })
+
+//populate all boxes into table
+
+function boxes(){
+  $.ajax({
+    type: 'GET',
+    url: "http://localhost:3000/api/boxes",
+    success: function (data) {
+      $("#mainBoxes").empty();
+      console.log("box data: ",data);
+      for (let i = 0; i < data.length; i++) {
+        var tr = $("<tr>")
+        var box = data[i].boxType
+        var volume = data[i].onHand
+        var boxes = $("<td>" + box + "</td>")
+        var number = $("<td>" + volume + "</td>")
+        tr.append(boxes, number)
+$("#mainBoxes").append(tr)
+      }
+}
+ })
+}
+
 
 
 //add a additional boxes to inventory
@@ -52,6 +75,8 @@ $("#additionalBoxes").on("click", function (event) {
 
     }
 
+  }).then(function(){
+    boxes()
   });
 
 });
