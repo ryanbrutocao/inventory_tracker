@@ -1,17 +1,26 @@
+<div class="table-label">Main Inventory</div>
+
+</div>
+<table class="table table-striped table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Brand</th>
+      <th scope="col">Vintage</th>
+      <th scope="col">Varietal</th>
+      <th scope="col">Current Inventory</th>
+      <th scope="col">Shadow Inventory</th>
+      <th scope="col">Total Ordered</th>
+      <th scope="col">Box Type</th>
+    </tr>
+  </thead>
+  <tbody id="mainInventoryTable">
+
+
+  </tbody>
+</table>
+
 <div class="jumbotron">
-  <h1><span class="customerName">View By</span></h1> <br>
-
-  {{!-- <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <label class="input-group-text" for="customerNames">Client</label>
-    </div>
-    <select class="custom-select" id="customerNames">
-
-      <option selected> Select ...</option>
-
-    </select>
-  </div> --}}
-
+  <h1><span class="customerName">Select by Varietal</span></h1> <br>
 
   <div class="input-group mb-3">
     <div class="input-group-prepend">
@@ -30,60 +39,12 @@
       <option data-name="Cabernet">Cabernet</option>
     </select>
   </div>
-
-
-
-
 </div>
-<table class="table table-striped table-dark">
-  <thead>
-    <tr>
-      <th scope="col">Brand</th>
-      <th scope="col">Vintage</th>
-      <th scope="col">Varietal</th>
-      <th scope="col">Current Inventory</th>
-      <th scope="col">Shadow Inventory</th>
-      {{!-- <th scope="col">Total Ordered</th> --}}
-      <th scope="col">Box Type</th>
-    </tr>
-  </thead>
-  <tbody id="mainInventoryTable">
 
-
-  </tbody>
-</table>
-
-<table class="table table-striped table-dark">
-  <thead>
-    <tr>
-      <th scope="col">Box Type</th>
-      <th scope="col">Remaining</th>
-   
-    </tr>
-  </thead>
-  <tbody id="mainBoxes">
-
-
-  </tbody>
-</table>
-{{!-- "update boxes" input field --}}
-Add additional boxes to inventory<br>
-<select class="boxDrop" id="addNewBoxes">
-  <option selected> Select ...</option>
-  <option data-name="WRT">WRT</option>
-  <option data-name="WRU">WRU</option>
-  <option data-name="WBAJA">WBAJA</option>
-
-</select>
-Quantity:<br>
-<input type="text" id="boxQuantity" value="">
-<br>
-<button id="additionalBoxes">
-  Add boxes to inventory
-</button>
 <hr>
 
 {{!-- 'Add new wine' input fields --}}
+<h1 class="add-wine-label"><span class="add-wine-label">Add a New Wine To the Inventory</span></h1> <br>
 <div id="newWineInput">
 
   Vintage:<br>
@@ -123,6 +84,37 @@ Quantity:<br>
 </button>
 <hr>
 
+{{!-- Boxes Section --}}
+<table class="table table-striped table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Box Type</th>
+      <th scope="col">Remaining</th>
+   
+    </tr>
+  </thead>
+  <tbody id="mainBoxes">
+
+
+  </tbody>
+</table>
+
+{{!-- "update boxes" input field --}}
+Add additional boxes to inventory<br>
+<select class="boxDrop" id="addNewBoxes">
+  <option selected> Select ...</option>
+  <option data-name="WRU">WRU</option>
+  <option data-name="WRT">WRT</option>
+  <option data-name="WBAJA">WBAJA</option>
+
+</select>
+Quantity:<br>
+<input type="text" id="boxQuantity" value="">
+<br>
+<button id="additionalBoxes">
+  Add boxes to inventory
+</button>
+
 
 {{!-- ------------------------------------ --}}
 
@@ -139,6 +131,28 @@ Quantity:<br>
 
           <a href="/">← Back To Home</a>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal for actual inventory changes-->
+<div id="addValue-modal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Change Inventory Value</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Enter new inventory value.</p>
+        <input type="text" class="newValue" value="">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="submit-inventory" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>

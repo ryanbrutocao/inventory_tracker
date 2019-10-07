@@ -5,7 +5,7 @@ module.exports = function (app) {
   // Load index page
   app.get("/", function (req, res) {
     db.mainInventory.findAll({}).then(function (results) {
-      res.render("homePage", { results: results });
+      res.render("mainInventory", { results: results });
 
     });
   });

@@ -22,7 +22,7 @@ boxes()
 
 
 
-})
+
 
 //populate all boxes into table
 
@@ -148,7 +148,7 @@ function mainInventory() {
         // var ordered = $("<td> -- </td>")
         var vint = $("<td>" + vintage + "</td>")
         var kind = $("<td>" + varietal + "</td>")
-        var actual = $("<td>" + actualInventory + "</td>")
+        var actual = $("<button><td>" + actualInventory + "</td></button>").addClass("changeValue")
         var shadow = $("<td>" + shadowInventory + "</td>")
         var boxtype = $("<td>" + boxType + "</td>")
 
@@ -168,6 +168,69 @@ function mainInventory() {
   })
 }
 //____________________________________________
+////////Change inventory number by clicking on "Current Inventory" number on mainInventory table/////////////
+
+
+//When user clicks number display modal
+$(document).on('click', '.changeValue', function(e) { 
+  $("#addValue-modal").modal("toggle")
+  var id = $(this).data('id')
+  console.log("id: " + $(this).data('id'))
+  var vintage = $(this).siblings()[1].innerHTML
+  var varietal = $(this).siblings()[2].innerHTML
+
+  //When user clicks "submit" on modal grab new inventory number
+  $(document).on('click', '#submit-inventory', function () {
+    var newValue = $('.newValue').val()
+    $("#addValue-modal").modal("toggle")
+    var newShadow = 0;
+    var inventoryUpdate;
+
+    //Get info from "orders" table
+    $.ajax({
+      type: 'GET',
+      url: 'http://localhost:3000/api/orders',
+      success: function (data) {
+       
+      //  If wine varietal and vintage match add to the promised amount
+       for (var i = 0; i < data.length; i++) {
+          if (data[i].vintage === vintage && data[i].varietal === varietal) {
+            newShadow += Number(data[i].promised)
+          }
+       }
+       console.log("id: " + id + " newvalue: " + newValue)
+      inventoryUpdate = {
+        "id": id,
+        //deduct promised amount from new inventory
+        "shadowInventory": newValue - newShadow,
+        "actualInventory": newValue
+      }
+      
+      }
+    //then update maininventory
+    })
+    .then(function() {
+      
+    
+
+      //then update the main inventory and reset table
+      $.ajax({
+        type: 'PUT',
+        url: 'http://localhost:3000/api/maininventory',
+        data: inventoryUpdate,
+        success: function (data) {
+          $('.newValue').val("")
+          //reset table display
+          mainInventory()
+        }
+    
+      });
+    }); 
+  });
+});
+
+
+
 
 //grabbing all info for a specific wine that is chosen from dropdown menu.
 $("#wineVarietal").change(function () {
@@ -267,4 +330,6 @@ $("#wineVarietal").change(function () {
   }
 
 });
+
+})
    //____________________________________________
