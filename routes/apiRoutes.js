@@ -2,30 +2,30 @@
 var db = require("../models");
 var sequelize = require("sequelize");
 
-module.exports = function(app) {
+module.exports = function (app) {
   /////////////////GET ROUTES (all currently working)//////////////////////////////////////////
   // Shows all of mainInventory
-  app.get("/api/maininventory", function(req, res) {
-    db.mainInventory.findAll({}).then(function(results) {
+  app.get("/api/maininventory", function (req, res) {
+    db.mainInventory.findAll({}).then(function (results) {
       res.json(results);
     });
   });
   // Shows all of customerInfo
-  app.get("/api/customerinfo", function(req, res) {
-    db.customerInfo.findAll({}).then(function(results) {
+  app.get("/api/customerinfo", function (req, res) {
+    db.customerInfo.findAll({}).then(function (results) {
       res.json(results);
     });
   });
   // Shows all orders
-  app.get("/api/orders", function(req, res) {
-    db.orders.findAll({}).then(function(results) {
+  app.get("/api/orders", function (req, res) {
+    db.orders.findAll({}).then(function (results) {
       res.json(results);
     });
   });
 
   //grabs all customers and all data
-  app.get("/api/allCustomers", function(req, res) {
-    db.customerInfo.findAll({}).then(function(results) {
+  app.get("/api/allCustomers", function (req, res) {
+    db.customerInfo.findAll({}).then(function (results) {
       res.json(results);
     });
   });
@@ -78,22 +78,36 @@ module.exports = function(app) {
   });
 
   //Shows labels tables
-  app.get("/api/labels", function(req, res) {
-    db.labels.findAll({}).then(function(results) {
+  app.get("/api/labels", function (req, res) {
+    db.labels.findAll({}).then(function (results) {
       res.json(results);
     });
   });
 
+  //Grabs label data for a specific client
+  app.get("/api/labels/:accountName",
+    function (req, res) {
+      db.labels.findAll({
+        where: {
+          accountName: req.params.accountName,
+
+        }
+      }).then(function (results) {
+        res.json(results);
+      });
+    });
+
+
   //shows boxes table
-  app.get("/api/boxes", function(req, res) {
-    db.boxes.findAll({}).then(function(results) {
+  app.get("/api/boxes", function (req, res) {
+    db.boxes.findAll({}).then(function (results) {
       res.json(results);
     });
   });
   ////////////////////////////POST ROUTES (all currently working)////////////////////////////////////////////
   // Create a new customer
-  app.post("/api/newCustomer", function(req, res) {
-    db.customerInfo.create(req.body).then(function(results) {
+  app.post("/api/newCustomer", function (req, res) {
+    db.customerInfo.create(req.body).then(function (results) {
       res.json(results);
     });
   });
@@ -118,30 +132,30 @@ module.exports = function(app) {
 
 
   //Add new label types to account by wine (i.e. add a new label for a varietal and vintage for account. Do not update quantity here)
-  app.post("/api/labels", function(req, res) {
-    db.labels.create(req.body).then(function(results) {
+  app.post("/api/labels", function (req, res) {
+    db.labels.create(req.body).then(function (results) {
       console.log(results);
       res.json(results);
     });
   });
   ///////////////////////////DELETE ROUTES (all currently working)//////////////////////////////////////////////////
   // Delete an order by id
-  app.delete("/api/orders/:id", function(req, res) {
-    db.orders.destroy({ where: { id: req.params.id } }).then(function(results) {
+  app.delete("/api/orders/:id", function (req, res) {
+    db.orders.destroy({ where: { id: req.params.id } }).then(function (results) {
       res.json(results);
     });
   });
   // Delete a customer by id (not sure we need this functionality)
-  app.delete("/api/customerinfo/:id", function(req, res) {
+  app.delete("/api/customerinfo/:id", function (req, res) {
     db.customerInfo
       .destroy({ where: { id: req.params.id } })
-      .then(function(results) {
+      .then(function (results) {
         res.json(results);
       });
   });
   //////////////////////////////UPDATE ROUTES(all currently working)///////////////////////////////////////////////
   // Update customerInfo
-  app.put("/api/customerinfo", function(req, res) {
+  app.put("/api/customerinfo", function (req, res) {
     console.log(req);
     console.log("-----------req above----------------");
     db.customerInfo
@@ -150,38 +164,38 @@ module.exports = function(app) {
           id: req.body.id
         }
       })
-      .then(function(dbUpdate) {
+      .then(function (dbUpdate) {
         res.json(dbUpdate);
       });
   });
 
   // Update orders
-  app.put("/api/orders", function(req, res) {
+  app.put("/api/orders", function (req, res) {
     db.orders
       .update(req.body, {
         where: {
           id: req.body.id
         }
       })
-      .then(function(dbUpdate) {
+      .then(function (dbUpdate) {
         res.json(dbUpdate);
       });
   });
   // Update Main Inventory
-  app.put("/api/maininventory", function(req, res) {
+  app.put("/api/maininventory", function (req, res) {
     db.mainInventory
       .update(req.body, {
         where: {
           id: req.body.id
         }
       })
-      .then(function(dbUpdate) {
+      .then(function (dbUpdate) {
         res.json(dbUpdate);
       });
   });
 
   //Update wine label quantity (used to add labels to an existing label count)
-  app.put("/api/labels", function(req, res) {
+  app.put("/api/labels", function (req, res) {
     db.labels
       .update(
         {
@@ -191,23 +205,23 @@ module.exports = function(app) {
           id: req.body.id
         }
       })
-      .then(function(dbUpdate) {
+      .then(function (dbUpdate) {
         res.json(dbUpdate);
       });
   });
 
   //Add boxes to inventory (used to add boxes to an existing box count)
-  app.put("/api/boxes", function(req, res) {
+  app.put("/api/boxes", function (req, res) {
     db.boxes
       .update(
         {
           onHand: sequelize.literal("onHand + " + req.body.onHand)
         }, {
-          where: {
-            boxType: req.body.boxType
-          }
-        })
-      .then(function(dbUpdate) {
+        where: {
+          boxType: req.body.boxType
+        }
+      })
+      .then(function (dbUpdate) {
         res.json(dbUpdate);
       });
   });
@@ -232,25 +246,25 @@ module.exports = function(app) {
             }
           }
         )
-        .then(function(dbUpdate) {
+        .then(function (dbUpdate) {
           console.log(dbUpdate);
         });
-      
+
       //deduct actualOrderd of boxType from boxes table
       db.boxes
         .update(
           {
-            onHand: sequelize.literal("onHand - " + results.actualOrdered )
+            onHand: sequelize.literal("onHand - " + results.actualOrdered)
           },
           {
             where: {
               boxType: results.boxType
             }
           }
-        ).then(function(dbUpdate) {
+        ).then(function (dbUpdate) {
           console.log(dbUpdate);
         });
-      
+
       //deduct from labels and promised on "labels" table
       var labelCount = results.actualOrdered * 12;
       db.labels
@@ -266,13 +280,13 @@ module.exports = function(app) {
               varietal: results.varietal
             }
           }
-        ).then(function(dbUpdate) {
+        ).then(function (dbUpdate) {
           console.log(dbUpdate);
         });
     }
     //if there was an amount promised
     if (results.promised) {
-      
+
       //deduct promise amount from mainInventory shadowInventory amount
       db.mainInventory
         .update(
@@ -285,7 +299,7 @@ module.exports = function(app) {
               varietal: results.varietal
             }
           }
-        ).then(function(dbUpdate) {
+        ).then(function (dbUpdate) {
           console.log(dbUpdate);
         });
 
@@ -301,11 +315,11 @@ module.exports = function(app) {
               vintage: results.vintage,
               varietal: results.varietal
             }
-          }  
-        ).then(function(dbUpdate) {
+          }
+        ).then(function (dbUpdate) {
           console.log(dbUpdate);
         });
     }
-    
+
   }
 }

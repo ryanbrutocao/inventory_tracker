@@ -40,7 +40,53 @@
     </select>
   </div>
 </div>
-  <hr>
+<table class="table table-striped table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Brand</th>
+      <th scope="col">Vintage</th>
+      <th scope="col">Varietal</th>
+      <th scope="col">Current Inventory</th>
+      <th scope="col">Shadow Inventory</th>
+      {{!-- <th scope="col">Total Ordered</th> --}}
+      <th scope="col">Box Type</th>
+    </tr>
+  </thead>
+  <tbody id="mainInventoryTable">
+
+
+  </tbody>
+</table>
+
+<table class="table table-striped table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Box Type</th>
+      <th scope="col">Remaining</th>
+   
+    </tr>
+  </thead>
+  <tbody id="mainBoxes">
+
+
+  </tbody>
+</table>
+{{!-- "update boxes" input field --}}
+Add additional boxes to inventory<br>
+<select class="boxDrop" id="addNewBoxes">
+  <option selected> Select ...</option>
+  <option data-name="WRT">WRT</option>
+  <option data-name="WRU">WRU</option>
+  <option data-name="WBAJA">WBAJA</option>
+
+</select>
+Quantity:<br>
+<input type="text" id="boxQuantity" value="">
+<br>
+<button id="additionalBoxes">
+  Add boxes to inventory
+</button>
+<hr>
 
 {{!-- 'Add new wine' input fields --}}
 <h1 class="add-wine-label"><span class="add-wine-label">Add a New Wine To the Inventory</span></h1> <br>
