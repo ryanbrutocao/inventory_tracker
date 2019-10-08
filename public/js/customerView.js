@@ -1,5 +1,13 @@
+
+
 $(document).ready(function () {
   //populates the customer dropdown
+ 
+customerNames()
+
+});
+function customerNames(){
+  $("#customerNames").empty()
   $.ajax({
     type: 'GET',
     url: 'http://localhost:3000/api/allCustomers',
@@ -13,10 +21,7 @@ $(document).ready(function () {
 
     }
   });
-
-
-});
-
+}
 
 //toggle on and off the 'add client' box
 
@@ -64,6 +69,7 @@ $("#newClientSubmit").on("click", function (event) {
       $("#city").val("");
       $("#state").val("");
       $("#zipCode").val("");
+      customerNames()
     }
 
   });
@@ -211,7 +217,7 @@ function salesData(data) {
         var varietal = data[i].varietal;
         var actualOrdered = data[i].actualOrdered;
         var promised = data[i].promised;
-        var orderDate = data[i].createdAt
+        var orderDate = data[i].createdAt.split("T")[0]
 
         var tr = $("<tr>")
         var vint = $("<td>" + vintage + "</td>")
