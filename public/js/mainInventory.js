@@ -129,7 +129,7 @@ function mainInventory() {
         // var ordered = $("<td> -- </td>")
         var vint = $("<td>" + vintage + "</td>").addClass('bear')
         var kind = $("<td>" + varietal + "</td>").addClass('deer')
-        var actual = $("<text><td>" + actualInventory + "</td></text>").addClass("changeValue")
+        var actual = $("<td>" + actualInventory + "</td>").addClass("changeValue")
         var shadow = $("<td>" + shadowInventory + "</td>")
         var boxtype = $("<td>" + boxType + "</td>")
 

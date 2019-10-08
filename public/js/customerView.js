@@ -153,7 +153,15 @@ $("#newSale").on("click", function (event) {
 
   })
     .then(function () {
+      $("#salesAccountName").val("");
+      $("#salesVintage").val("");
+      $("#salesQuantity").val("");
+      $("#salesVarietalDropdown").val("Select ...");
+
+      
+      
       salesData(salesAccountName)
+      inventoryData(salesAccountName)
     });
 
 
