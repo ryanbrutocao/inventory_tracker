@@ -4,7 +4,7 @@ var path = require("path");
 module.exports = function (app) {
   // Load index page
   app.get("/", function (req, res) {
-    db.mainInventory.findAll({}).then(function (results) {
+    db.orders.findAll({}).then(function (results) {
       res.render("homePage", { results: results });
 
     });

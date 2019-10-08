@@ -3,32 +3,26 @@ $(document).ready(function () {
     type: "GET",
     url: "http://localhost:3000/api/orders",
 
-    success: function (data) {
-      console.log("data: ", data);
-      for (i = 0; i < data.length; i++) {
-        var varietal = data[i].varietal;
-        var ordered = data[i].actualOrdered;
-        var yearOrdered = data[i].createdAt.split("T")[0].split("-")[0];
-        // console.log("year ordered: ", yearOrdered);
-        sortAndDisplay(varietal, ordered, yearOrdered);
-      }
-    }
-  }).then(function () {
-    basket.push(sbSum, chardSum, pinotSum, zinSum, rbSum, merSum, cabSum);
-    // console.log("basket sb:", typeof sbSum);
-    // basket.push(chardSum);
-    // basket.push(pinotSum);
-    // basket.push(zinSum);
-    // basket.push(rbSum);
-    // basket.push(merSum);
-    // basket.push(cabSum);
-  });
+    success: handleData
+  })
 });
+function handleData (data) {
+  console.log("data: ", data);
+  var basket = []
+  for (i = 0; i < data.length; i++) {
+    var varietal = data[i].varietal;
+    var ordered = data[i].actualOrdered;
+    var yearOrdered = data[i].createdAt.split("T")[0].split("-")[0];
+    // console.log("year ordered: ", yearOrdered);
+    sortAndDisplay(varietal, ordered, yearOrdered);
+  }
+  basket.push(sbSum, chardSum, pinotSum, zinSum, rbSum, merSum, cabSum);
+  console.log("basket: ", basket);
+  postData(basket)
+}
 
+var basket=[];
 function sortAndDisplay(varietal, ordered, yearOrdered) {
-  // console.log("varietal type: ", typeof varietal);//string
-  // console.log("ordered type: ", typeof ordered);//number
-  // console.log("year ordered: ", typeof yearOrdered);//string
 
   if ((yearOrdered = "2019")) {
     wineOrder(varietal, ordered);
@@ -38,8 +32,7 @@ function sortAndDisplay(varietal, ordered, yearOrdered) {
 }
 
 function wineOrder(varietal, ordered) {
-  // console.log(varietal);
-  // console.log(ordered);
+
   var varietal;
   var ordered;
   // console.log("ordered type: ", typeof ordered);
@@ -77,16 +70,8 @@ function wineOrder(varietal, ordered) {
   return varietal;
 }
 
-//these arrays are a collecting point for all sales... will be totaled and pushed to wineVolArr[]
-var basket = [];
-console.log("basket: ", basket);
+//these arrays are a collecting point for all sales... will be used as the y: value
 
-// var obj = {"1":5,"2":7,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0,"11":0,"12":0}
-var result = Object.keys(basket).map(function (key) {
-  return [Number(key), basket[key]];
-});
-
-console.log("result:  :", result);
 
 // console.log("basket type: ", typeof basket);
 var sbArr = [];
@@ -162,34 +147,36 @@ function cab(data) {
 
 zebra = [19, 2, 22, 14, 16, 19, 15];
 console.log("Zebra: ", zebra);
+function postData(basket){
+  var totalSales2019 = {
+    x: [
+      "Sauvignon Blanc",
+      "Chardonnay",
+      "Pinot Noir",
+      "Zinfandel",
+      "Red Blend",
+      "Merlot",
+      "Cabernet"
+    ],
+    y: basket,
+    type: "bar",
+    name: "Cabernet",
+    marker: {
+      color: "rgb(0,255,0)",
+      opacity: 0.5
+    }
+  };
+  
+  var data = [totalSales2019];
+  
+  var layout = {
+    title: "Yearly Sales by Varietal",
+    xaxis: {
+      tickangle: -45
+    },
+    barmode: "group"
+  };
+  
+  Plotly.newPlot("myDiv", data, layout);
 
-var totalSales2019 = {
-  x: [
-    "Sauvignon Blanc",
-    "Chardonnay",
-    "Pinot Noir",
-    "Zinfandel",
-    "Red Blend",
-    "Merlot",
-    "Cabernet"
-  ],
-  y:[19, 2, 22, 14, 16, 19, 15],
-  type: "bar",
-  name: "Cabernet",
-  marker: {
-    color: "rgb(169,169,169)",
-    opacity: 0.5
-  }
-};
-
-var data = [totalSales2019];
-
-var layout = {
-  title: "Yearly Sales by Varietal",
-  xaxis: {
-    tickangle: -45
-  },
-  barmode: "group"
-};
-
-Plotly.newPlot("myDiv", data, layout);
+}
