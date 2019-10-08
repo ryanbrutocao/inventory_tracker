@@ -14,13 +14,14 @@ $(document).ready(function () {
       }
     }
   }).then(function () {
-    basket.push(sbSum);
-    basket.push(chardSum);
-    basket.push(pinotSum);
-    basket.push(zinSum);
-    basket.push(rbSum);
-    basket.push(merSum);
-    basket.push(cabSum);
+    basket.push(sbSum, chardSum, pinotSum, zinSum, rbSum, merSum, cabSum);
+    // console.log("basket sb:", typeof sbSum);
+    // basket.push(chardSum);
+    // basket.push(pinotSum);
+    // basket.push(zinSum);
+    // basket.push(rbSum);
+    // basket.push(merSum);
+    // basket.push(cabSum);
   });
 });
 
@@ -46,6 +47,7 @@ function wineOrder(varietal, ordered) {
     case "Sauvignon Blanc":
       sbArr.push(ordered);
       sb(sbArr);
+      console.log("sb sum type:", typeof ordered);
       break;
     case "Chardonnay":
       chardArr.push(ordered);
@@ -158,6 +160,9 @@ function cab(data) {
 
 //wineVolArr is a final array collecting the sum value of each varietal's total sales. will be sent as the y: value
 
+zebra = [19, 2, 22, 14, 16, 19, 15];
+console.log("Zebra: ", zebra);
+
 var totalSales2019 = {
   x: [
     "Sauvignon Blanc",
@@ -168,7 +173,7 @@ var totalSales2019 = {
     "Merlot",
     "Cabernet"
   ],
-  y: [19, 2, 22, 14, 16, 19, 15],
+  y:[19, 2, 22, 14, 16, 19, 15],
   type: "bar",
   name: "Cabernet",
   marker: {
