@@ -1,5 +1,5 @@
 body {
-  background-color: #e9ecef;
+  background-color: #d8d8d8;
 }
 
 hr {
@@ -17,28 +17,33 @@ hr {
   border-top: 1px solid grey;
 }
 
-.list-group-item {
-  line-height: 2.5;
-}
-
 /************************** Header and Nav ************************/
-.title {
-  height: 150px;
-  width: 300px;
+  .navbar-brand.title{
+    border-radius: 3%;
+    border: 3px gray solid;
+    border-style: ridge;
+  }
+  .list-group-item {
+    line-height: 2.5;
+  }
+
+  .title {
+  height: 10%;
+  width: 30%;
   background-color: rgb(164, 30, 30);
   display: inline-block;
-  font-size: 50px;
+  font-size: 3em;
   text-align: center;
   vertical-align: middle;
-  line-height: 150px;
+  /* line-height: 150px; */
 }
 
-.nav {
+/* .nav {
   display: inline-block;
-  width: 900px;
+  width:100%;
   /* margin: 0px; */
-  text-align: center;
-}
+  /* text-align: center; */
+/* } */
 
 .nav-container {
   text-align: center;
@@ -47,31 +52,41 @@ hr {
   
 }
 
-ul.nav {
+/* ul.nav {
   margin: auto;
   width: 900px;
 }
 
 li.nav-item {
   display: inline-block;
-}
+} */
 
 .nav-link {
   font-size: 20px;
   color: rgb(164, 30, 30);
 }
 
+/************************Sales Chard Display Area **************************************/
+#myDiv{
+  margin: 10% 20%;
+  text-align: center;
+  display: inline-block;
+  margin: auto;
+  
+}
+
+
 /************************Table Area **************************************/
 
 .main-inventory-table {
-  width: 95%;
+  width: 70%;
   margin: auto;
 }
 
 .table-label {
-  font-size: 50px;
-  margin-top: 100px;
-  margin-bottom: 20px;
+  font-size: 3em;
+  /* margin-top: 100px; */
+  margin-bottom: 1%;
   text-align: center;
 }
 
@@ -102,45 +117,58 @@ div.jumbotron {
   padding: 0;
   text-align: center;
 }
-
+.btn.btn-primary {
+  margin:0% 2%;
+}
 .mb-3 {
-  width: 60%;
-  text-align: center;
-  /* margin-left: 300px; */
-  margin: auto;
+  width: 25%;
+  /* text-align: left; */ 
+  margin-left: 3%;
+  /* margin: auto; */
 }
 
 /*** Add New Wine ***/
 
 .add-wine-label {
-  margin: auto;
+  /* margin: auto; */
   display: block;
-  margin-top: 70px;
-  margin-bottom: 50px;
+margin-bottom: 1%;
 }
 
-.wi {
+/* .wi {
   height: 60px;
-}
+} */
 
-#newWineInput {
+/* #newWineInput {
   text-align: center;
-}
-
+} */
+/* 
 #addNewWine {
   position: relative;
   left: 300px;
   bottom: 180px;
-}
+} */
 
 /***Boxes Table****/
+table.table-striped.table-dark.new-table {
+  width: 70%;
+}
 
+table.table-striped.table-dark.box-table {
+  margin:0% 1%;
+  margin: auto;
+  width: 50%
+}
+#boxBtn {
+  margin-left:9%;
+}
+/* 
 .box-table {
   width: 500px;
   margin: auto;
   margin-bottom: 80px;
   margin-top: 60px;
-}
+} */
 
 /***Boxes Inputs *****/
 
@@ -149,31 +177,30 @@ div.jumbotron {
   margin-bottom: 60px;
 }
 
-#additionalBoxes {
+/* #additionalBoxes {
   position: relative;
   left: 300px;
   bottom: 120px;
-}
-
+} */
+/* 
 .spec {
   margin-bottom: 30px;
-}
+} */
 
 
 /**********************Customer View Page*********************************/
 
 /*****Select Customer*****/
 
-.customer-select {
+/* .customer-select {
   margin-bottom: 100px;
-}
+} */
 
 /*******Add New Customer*******/
 
-.add-cust {
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
+/* .add-cust {
+margin: 5% 0%;
+} */
 
 #addNewCustomer {
   height: 50px;
@@ -189,11 +216,17 @@ div.jumbotron {
 /*****Customer Info and Notes*****/
 
 .customer-info {
-  /* height: 400px; */
+ 
   text-align: center;
 }
 
+#clientNotes.form-control{
+
+  width: 95%;
+}
 .client-notes {
+  margin-left: 3%;
+  width: 100%;
   /* text-align: center; */
   display: inline-block;
   /* margin-left: 200px;
@@ -202,13 +235,14 @@ div.jumbotron {
 }
 
 .client-card {
-  /* width: 500px;
-  height: 200px; */
-  display: inline-block;
+  width: 90%;
+  /* height: 200px; */ 
+  /* display: inline-block; */
   
 }
 
 .notes {
+  width:90%;
   font-size: 24px;
   text-decoration: underline;
   /* margin-bottom: 20px; */

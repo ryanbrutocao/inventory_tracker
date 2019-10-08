@@ -1,91 +1,239 @@
 {{!------------------------------ choose customer dropdown section------------------------------------}}
-<div class="jumbotron customer-select">
-  <h1 class="add-wine-label"><span class="customerName add-wine-label sec">Choose Customer or Create New Customer</span></h1> <br>
+{{!-- <div class="jumbotron customer-select"> --}}
+<br>
+<div class="row">
 
+  <!-- Choose a customer dropdown -->
   <div class="input-group mb-3">
     <div class="input-group-prepend">
       <label class="input-group-text cust-btn" for="customerNames">Customers</label>
     </div>
     <select class="custom-select" id="customerNames">
-
       <option selected> Select ...</option>
 
     </select>
   </div>
 
-  {{!-- new customer display that shows/hides --}}
-  <div class="add-cust">
-    <span class="plus">+</span>
-    <button id="addNewCustomer" data-val="off">Add New Customer</button>
+  <!-- Button trigger modal -  add new client -->
+  <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addClientModal">
+    Add New Client
+  </button>
+
+  <!-- Button trigger modal - add new wine -->
+  <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addClientWineModal">
+    Add Client Wine
+  </button>
+
+  <!-- Button trigger modal - place order -->
+  <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#placeOrderModal">
+    Place Order
+  </button>
+
+</div>
+
+<!-- Modal to add new client-->
+<div class="modal fade" id="addClientModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> New Client Input</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Client Name:<br>
+        <input type="text" id="clientName" value="">
+        <br>
+        Primary Contact:<br>
+        <input type="text" id="primContact" value="">
+        <br>
+        Phone Number:<br>
+        <input type="text" id="phNumber" value="">
+        <br>
+        E-mail Address:<br>
+        <input type="text" id="emailAddress" value="">
+        <br>
+        Street:<br>
+        <input type="text" id="street" value="">
+        <br>
+        City:<br>
+        <input type="text" id="city" value="">
+        <br>
+        State:<br>
+        <input type="text" id="state" value="">
+        <br>
+        Zip Code:<br>
+        <input type="text" id="zipCode" value="">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="newClientSubmit" class="btn btn-primary">Add Client</button>
+      </div>
+    </div>
   </div>
-
-
-<div id="newClientInput" style="display:none;">
-  Client Name:<br>
-  <input type="text" id="clientName" value="">
-  <br>
-  Primary Contact:<br>
-  <input type="text" id="primContact" value="">
-  <br>
-  Phone Number:<br>
-  <input type="text" id="phNumber" value="">
-  <br>
-  E-mail Address:<br>
-  <input type="text" id="emailAddress" value="">
-  <br>
-  Street:<br>
-  <input type="text" id="street" value="">
-  <br>
-  City:<br>
-  <input type="text" id="city" value="">
-  <br>
-  State:<br>
-  <input type="text" id="state" value="">
-  <br>
-  Zip Code:<br>
-  <input type="text" id="zipCode" value="">
-  <br>
-  <input type="submit" value="Submit" id="newClientSubmit">
-  <button id="nevermind">Nevermind!</button>
 </div>
+<br>
+<!-- Modal to add new client wine-->
+<div class="modal fade" id="addClientWineModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add New Client Wine</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          Account Name:<br>
+          <input type="text" id="newAccountName" value="">
+        </div>
 
-</div>
-<hr>
+        <div>
+          Vintage:<br>
+          <input type="text" id="newVintage" value="">
+        </div>
 
-{{!------------------------------------ Customer Info -------------------------------------------}}
-<div class="customer-info">
-  
-  <div class="client-card">
-    <div class="card">
-  <div class="card-header">
-    Customer Contact Information
+        <div>
+          Varietal:<br>
+          <select class="varietalDropdown" id="varietalDropdown">
+            <option selected> Select ...</option>
+            <option data-name="Sauvignon Blanc">Sauvignon Blanc</option>
+            <option data-name="Chardonnay">Chardonnay</option>
+            <option data-name="Pinot Noir">Pinot Noir</option>
+            <option data-name="Red Blend">Red Blend</option>
+            <option data-name="Zinfandel">Zinfandel</option>
+            <option data-name="Merlot">Merlot</option>
+            <option data-name="Cabernet">Cabernet</option>
+          </select>
+        </div>
+
+        <div>
+          Labels To Add:<br>
+          <input type="text" id="labelsAdded" value="">
+        </div>
+
+        <div>
+          Promised:<br>
+          <input type="text" id="quantPromised" value="0">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="addNewWine" class="btn btn-primary" data-dismiss="modal">Add Wine</button>
+      </div>
+    </div>
   </div>
- 
-  <div class="card-body" id="contactCard">
-    <h5 class="card-title">customer name here</h5>
-    <strong>Name:</strong> <span class="card-text" id="customerName"></span><br>
-    <strong>Primary Contact:</strong> <span class="card-text" id="primaryContact"></span><br>
-    <strong>Phone Number:</strong> <span class="card-text" id="phoneNumber"></span><br>
-    <strong>E-mail:</strong> <span class="card-text" id="email"></span><br>
-    <strong>Address:</strong><br>
-    <span class="card-text" id="address"></span>
+</div>
+
+<!-- Modal to place order -->
+<div class="modal fade" id="placeOrderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Place Order</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="wi">
+          Account Name<br>
+          <input type="text" id="salesAccountName" value="">
+        </div>
+        <div class="wi">
+          Vintage:<br>
+          <input type="text" id="salesVintage" value="">
+        </div>
+
+        <div class="wi">
+          Varietal:<br>
+          <select class="newSale" id="salesVarietalDropdown">
+            <option selected> Select ...</option>
+            <option data-name="Sauvignon Blanc">Sauvignon Blanc</option>
+            <option data-name="Chardonnay">Chardonnay</option>
+            <option data-name="Pinot Noir">Pinot Noir</option>
+            <option data-name="Red Blend">Red Blend</option>
+            <option data-name="Zinfandel">Zinfandel</option>
+            <option data-name="Merlot">Merlot</option>
+            <option data-name="Cabernet">Cabernet</option>
+          </select>
+        </div>
+
+        <div class="wi">
+          Quantity:<br>
+          <input type="text" id="salesQuantity" value="">
+        </div>
+
+        <div class="wi">
+          <select id="actualPromise">
+            <option data-name="actualOrderd">Actual</option>
+            <option data-name="promised">Promised</option>
+
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="newSale" class="btn btn-primary" data-dismiss="modal">Place Order</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- </div> --}}
+
+<div class="row">
+  <div class="col-8">
+    <div class="client-notes">
+
+      <h1 class="notes">Client Notes</h1>
+      <button id="updateNotes">update</button>
+      <textarea id="clientNotes" class="form-control" aria-label="Client Notes">
+
+    </textarea>
+    </div>
+
+  </div>
+  <div class="col-4">
+    <br><br><br>
+    <div class="client-card">
+      <div class="card">
+        <div class="card-header">
+          Client Contact:
+        </div>
+
+
+
+        <div class="card-body" id="contactCard">
+
+          <strong>Name:</strong> <span class="card-text" id="customerName"></span><br>
+          <strong>Primary Contact:</strong> <span class="card-text" id="primaryContact"></span><br>
+          <strong>Phone Number:</strong> <span class="card-text" id="phoneNumber"></span><br>
+          <strong>E-mail:</strong> <span class="card-text" id="email"></span><br>
+          <strong>Address:</strong><br>
+          <span class="card-text" id="address"></span>
+
+        </div>
+      </div>
+    </div>
 
   </div>
 </div>
-  </div>
-  
 
-<div class="client-notes">
-  
-    <h1 class="notes">Client Notes</h1>
-    <textarea id="clientNotes" class="form-control" aria-label="Client Notes"></textarea>
-    <br> <button id="updateNotes">update</button>
-      
-</div>
+
+
+
+
+
 
 </div>
 
-<hr>
+
 
 {{!------------------------------ Table for viewing inventory by account -------------------------------}}
 <h1 class="add-wine-label"><span class="customerName add-wine-label sec">Account Inventory</span></h1>
@@ -105,7 +253,8 @@
 
   </tbody>
 </table>
-<hr>
+<br>
+{{!-- <hr> --}}
 
 {{!------------------------------------- Orders Table by Account ----------------------------------------------}}
 <h1 class="add-wine-label"><span class="customerName add-wine-label sec">Account Orders</span></h1>
@@ -124,109 +273,5 @@
   </tbody>
 </table>
 
-{{!-- client notes area (!!!!!!!!!!!!!!delete this if "notes update" is still working)--}}
-{{!-- <div class="input-group">
-  <div class="input-group-prepend">
-    <span>
-      <span class="input-group-text">Client Notes
-        <br> <button id="updateNotes">update</button>
-      </span>
-    </span>
-  </div>
-  <textarea id="clientNotes" class="form-control" aria-label="Client Notes"></textarea>
-</div> --}}
-
-
-{{!------------------------------------- Add a new wine to the Orders table ------------------------------------}}
-<div id="newSalesOrder">
-
-  <h1 class="add-wine-label"><span class="customerName add-wine-label sec">Place An Order</span></h1>
-
-  <div class="wi">
-    Account Name<br>
-  <input type="text" id="salesAccountName" value="">
-  </div>
-  <div class="wi">
-    Vintage:<br>
-  <input type="text" id="salesVintage" value="">
-  </div>
-
-  <div class="wi">
-    Varietal:<br>
-  <select class="newSale" id="salesVarietalDropdown">
-    <option selected> Select ...</option>
-    <option data-name="Sauvignon Blanc">Sauvignon Blanc</option>
-    <option data-name="Chardonnay">Chardonnay</option>
-    <option data-name="Pinot Noir">Pinot Noir</option>
-    <option data-name="Red Blend">Red Blend</option>
-    <option data-name="Zinfandel">Zinfandel</option>
-    <option data-name="Merlot">Merlot</option>
-    <option data-name="Cabernet">Cabernet</option>
-  </select>
-  </div>
-  
-  <div class="wi">
-    Quantity:<br>
-  <input type="text" id="salesQuantity" value="">
-  </div>
-  
-  <div class="wi">
-  <select id="actualPromise">
-    <option data-name="actualOrderd">Actual</option>
-    <option data-name="promised">Promised</option>
-
-  </select>
-  </div>
-
-  <button id="addNewSale">Add Order</button>
-  
-</div>
-
-<hr>
-
-
-{{!------------------------------------- Add a new wine to the Labels table ----------------------------------}}
-<div id="newWineInput">
-
-  <h1 class="add-wine-label"><span class="customerName add-wine-label sec">Add Wine to an Account</span></h1>
-
-  <div class="wi">
-    Account Name:<br>
-  <input type="text" id="newAccountName" value="">
-  </div>
-
-  <div class="wi">
-    Vintage:<br>
-  <input type="text" id="newVintage" value="">
-  </div>
-
-  <div class="wi">
-    Varietal:<br>
-  <select class="varietalDropdown" id="varietalDropdown">
-    <option selected> Select ...</option>
-    <option data-name="Sauvignon Blanc">Sauvignon Blanc</option>
-    <option data-name="Chardonnay">Chardonnay</option>
-    <option data-name="Pinot Noir">Pinot Noir</option>
-    <option data-name="Red Blend">Red Blend</option>
-    <option data-name="Zinfandel">Zinfandel</option>
-    <option data-name="Merlot">Merlot</option>
-    <option data-name="Cabernet">Cabernet</option>
-  </select>
-  </div>
-  
-  <div class="wi">
-    Labels To Add:<br>
-  <input type="text" id="labelsAdded" value="">
-  </div>
-
-  <div class="wi">
-    Promised:<br>
-  <input type="text" id="quantPromised" value="0">
-  </div>
-   
-  <button id="addNewWine">add new wine</button>
-
-</div>
 
 <script src="./js/customerView.js"></script>
-
