@@ -1,27 +1,8 @@
 $(document).ready(function () {
   // populates the table on load
   mainInventory();
-boxes()
-  // //populates the customer dropdown -- code on mainInventory.hbs is also commented out.
-  // $.ajax({
-  //   type: 'GET',
-  //   url: 'http://localhost:3000/api/orders',
-
-  //   success: function (data) {
-  //     for (i = 0; i < data.length; i++) {
-  //       var custName = data[i].accountName;
-  //       var dropOption = "<option id=" + custName + ">" + custName + "</option>";
-
-  //       $("#customerNames").append(dropOption)
-  //     }
-
-  //   }
-  // });
-  //____________________________________________
-
-
-
-
+  boxes()
+  
 
 
 //populate all boxes into table
@@ -40,7 +21,7 @@ function boxes(){
         var boxes = $("<td>" + box + "</td>")
         var number = $("<td>" + volume + "</td>")
         tr.append(boxes, number)
-$("#mainBoxes").append(tr)
+        $("#mainBoxes").append(tr)
       }
 }
  })
@@ -146,8 +127,8 @@ function mainInventory() {
         var th = $("<th scope='row'></th>")
         var wHouse = $("<td>Warehouse</td>")
         // var ordered = $("<td> -- </td>")
-        var vint = $("<td>" + vintage + "</td>")
-        var kind = $("<td>" + varietal + "</td>")
+        var vint = $("<td>" + vintage + "</td>").addClass('bear')
+        var kind = $("<td>" + varietal + "</td>").addClass('deer')
         var actual = $("<button><td>" + actualInventory + "</td></button>").addClass("changeValue")
         var shadow = $("<td>" + shadowInventory + "</td>")
         var boxtype = $("<td>" + boxType + "</td>")
@@ -171,63 +152,73 @@ function mainInventory() {
 ////////Change inventory number by clicking on "Current Inventory" number on mainInventory table/////////////
 
 
-//When user clicks number display modal
-$(document).on('click', '.changeValue', function(e) { 
-  $("#addValue-modal").modal("toggle")
-  var id = $(this).data('id')
-  console.log("id: " + $(this).data('id'))
-  var vintage = $(this).siblings()[1].innerHTML
-  var varietal = $(this).siblings()[2].innerHTML
-
-  //When user clicks "submit" on modal grab new inventory number
-  $(document).on('click', '#submit-inventory', function () {
-    var newValue = $('.newValue').val()
+  //When user clicks number display modal
+  $(document).on('click', '.changeValue', function(e) { 
+   
     $("#addValue-modal").modal("toggle")
-    var newShadow = 0;
-    var inventoryUpdate;
+  
+    var $target = $(e.currentTarget);
+  
+    var id = $target.data('id')
+    console.log("id: " + $(this).data('id'))
+  
+    var vintage = $target.siblings()[1].innerHTML
+    var varietal = $target.siblings()[2].innerHTML
 
+    console.log(vintage + varietal)
+  
+    $("#addValue-modal").attr("data-selected-id", id);
+    $("#addValue-modal").attr("data-selected-vintage", vintage);
+    $("#addValue-modal").attr("data-selected-varietal", varietal);
+  });
+  
+  //When user clicks "submit" on modal grab new inventory number
+  $(document).on('click', '#submit-inventory', function (e) {
+    var id = $("#addValue-modal").attr("data-selected-id");
+    var vintage = $("#addValue-modal").attr("data-selected-vintage");
+    var varietal = $("#addValue-modal").attr("data-selected-varietal");
+    var newValue = $('.newValue').val()
+    console.log("new: " + vintage + varietal)
+  
+    $("#addValue-modal").modal("toggle")
+  
+    var newShadow = 0;
+    var inventoryUpdate = {};
+  
     //Get info from "orders" table
     $.ajax({
-      type: 'GET',
-      url: 'http://localhost:3000/api/orders',
-      success: function (data) {
-       
-      //  If wine varietal and vintage match add to the promised amount
-       for (var i = 0; i < data.length; i++) {
-          if (data[i].vintage === vintage && data[i].varietal === varietal) {
-            newShadow += Number(data[i].promised)
-          }
-       }
-       console.log("id: " + id + " newvalue: " + newValue)
-      inventoryUpdate = {
-        "id": id,
-        //deduct promised amount from new inventory
-        "shadowInventory": newValue - newShadow,
-        "actualInventory": newValue
-      }
-      
-      }
-    //then update maininventory
-    })
-    .then(function() {
-      
-    
-
-      //then update the main inventory and reset table
-      $.ajax({
-        type: 'PUT',
-        url: 'http://localhost:3000/api/maininventory',
-        data: inventoryUpdate,
-        success: function (data) {
-          $('.newValue').val("")
-          //reset table display
-          mainInventory()
-        }
-    
-      });
-    }); 
+         type: 'GET',
+         url: 'http://localhost:3000/api/orders',
+         success: function (data) {
+           //  If wine varietal and vintage match add to the promised amount
+           for (var i = 0; i < data.length; i++) {
+             if (data[i].vintage === vintage && data[i].varietal === varietal) {
+               newShadow += Number(data[i].promised)
+             }
+           }
+  
+           console.log("id: " + id + " newvalue: " + newValue)
+           inventoryUpdate = {
+             "id": id,
+             //deduct promised amount from new inventory
+             "shadowInventory": newValue - newShadow,
+             "actualInventory": newValue
+           };
+  
+           $.ajax({
+              type: 'PUT',
+              url: 'http://localhost:3000/api/maininventory',
+              data: inventoryUpdate,
+              success: function (data) {
+                $('.newValue').val("")
+                //reset table display
+                mainInventory()
+              }
+  
+           });
+         }
+    });
   });
-});
 
 
 
