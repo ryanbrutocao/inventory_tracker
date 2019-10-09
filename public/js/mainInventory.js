@@ -10,7 +10,7 @@ $(document).ready(function () {
 function boxes(){
   $.ajax({
     type: 'GET',
-    url: "http://localhost:3000/api/boxes",
+    url: "/api/boxes",
     success: function (data) {
       $("#mainBoxes").empty();
       console.log("box data: ",data);
@@ -47,7 +47,7 @@ $("#additionalBoxes").on("click", function (event) {
   }
   $.ajax({
     type: 'PUT',
-    url: 'http://localhost:3000/api/boxes',
+    url: '/api/boxes',
     data: boxInfo,
     success: function (data) {
       console.log("You've successfully added a wine")
@@ -87,7 +87,7 @@ $("#addNewWine").on("click", function (event) {
   }
   $.ajax({
     type: 'POST',
-    url: 'http://localhost:3000/api/newWine',
+    url: '/api/newWine',
     data: newWineInfo,
     success: function (data) {
       console.log("You've successfully added a wine")
@@ -112,7 +112,7 @@ function mainInventory() {
 
   $.ajax({
     type: 'GET',
-    url: "http://localhost:3000/api/maininventory",
+    url: "/api/maininventory",
     success: function (data) {
       $("#mainInventoryTable").empty();
       for (let i = 0; i < data.length; i++) {
@@ -188,7 +188,7 @@ function mainInventory() {
     //Get info from "orders" table
     $.ajax({
          type: 'GET',
-         url: 'http://localhost:3000/api/orders',
+         url: '/api/orders',
          success: function (data) {
            //  If wine varietal and vintage match add to the promised amount
            for (var i = 0; i < data.length; i++) {
@@ -207,7 +207,7 @@ function mainInventory() {
   
            $.ajax({
               type: 'PUT',
-              url: 'http://localhost:3000/api/maininventory',
+              url: '/api/maininventory',
               data: inventoryUpdate,
               success: function (data) {
                 $('.newValue').val("")
@@ -239,7 +239,7 @@ $("#wineVarietal").change(function () {
 
     $.ajax({
       type: 'GET',
-      url: "http://localhost:3000/api/oneVarietal/" + varietalType + "",
+      url: "/api/oneVarietal/" + varietalType + "",
       success: function (data) {
         console.log("You are getting the info back")
         $("#mainInventoryTable").empty();
@@ -279,7 +279,7 @@ $("#wineVarietal").change(function () {
     //call and get specific wine from each customer: populate table
     $.ajax({
       type: 'GET',
-      url: "http://localhost:3000/api/orders/" + varietalType + "",
+      url: "/api/orders/" + varietalType + "",
       success: function (data) {
         console.log("You are getting the customer info back")
         console.log("custom data: ", data)

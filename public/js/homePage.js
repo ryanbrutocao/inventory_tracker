@@ -1,7 +1,7 @@
 $(document).ready(function () {
   $.ajax({
     type: "GET",
-    url: "http://localhost:3000/api/orders",
+    url: "/api/orders",
 
     success: handleData
   })

@@ -12,7 +12,7 @@ function customerNames() {
   $("#customerNames").append(" <option selected> Select ...</option>")
   $.ajax({
     type: 'GET',
-    url: 'http://localhost:3000/api/allCustomers',
+    url: '/api/allCustomers',
 
     success: function (data) {
       for (i = 0; i < data.length; i++) {
@@ -60,7 +60,7 @@ $("#newClientSubmit").on("click", function (event) {
   }
   $.ajax({
     type: 'POST',
-    url: 'http://localhost:3000/api/newCustomer',
+    url: '/api/newCustomer',
     data: customerInfo,
     success: function (data) {
       $("#clientName").val("");
@@ -145,7 +145,7 @@ $("#newSale").on("click", function (event) {
   console.log(newSaleInfo);
   $.ajax({
     type: 'POST',
-    url: 'http://localhost:3000/api/orders',
+    url: '/api/orders',
     data: newSaleInfo,
     success: function (data) {
       console.log("you posted new info");
@@ -180,7 +180,7 @@ $("#updateNotes").on("click", function (event) {
   }
   $.ajax({
     type: 'PUT',
-    url: 'http://localhost:3000/api/customerinfo',
+    url: '/api/customerinfo',
     data: note,
     success: function (data) {
       console.log("note updated");
@@ -217,7 +217,7 @@ function salesData(data) {
   $("#accountSales").empty()
   $.ajax({ //pulling from orders
     type: 'GET',
-    url: "http://localhost:3000/api/oneCustomer/" + nameValue + "",
+    url: "/api/oneCustomer/" + nameValue + "",
     success: function (data) {
       // console.log("correctly ordered data: ", data);
 
@@ -252,7 +252,7 @@ function inventoryData(data) {
   $("#accountInventory").empty()
   $.ajax({//[grabbing label info with this AJAX call...
     type: 'GET',
-    url: "http://localhost:3000/api/labels/" + nameValue + "",
+    url: "/api/labels/" + nameValue + "",
     success: function (dataHere) {
       console.log("dataHere: ", dataHere);
       for (let i = 0; i < dataHere.length; i++) {
@@ -295,7 +295,7 @@ function two(data) {
 
   $.ajax({
     type: 'GET',
-    url: "http://localhost:3000/api/customerContact/" + nameValue + "",
+    url: "/api/customerContact/" + nameValue + "",
     success: function (data) {
       // console.log("contact data: ", data)
       for (let i = 0; i < data.length; i++) {
@@ -360,7 +360,7 @@ $("#addNewWine").on("click", function (event) {
   }
   $.ajax({
     type: 'POST',
-    url: 'http://localhost:3000/api/labels',
+    url: '/api/labels',
     data: newWineInfo,
     success: function (data) {
       console.log("You've added a new wine to labels")
