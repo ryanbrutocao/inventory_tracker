@@ -3,15 +3,15 @@ var path = require("path");
 
 module.exports = function (app) {
   // Load index page
-  // app.get("/", function (req, res) {
-  //   db.orders.findAll({}).then(function (results) {
-  //     res.render("homePage", { results: results });
-
-  //   });
-  // });
-
-
   app.get("/", function (req, res) {
+    db.orders.findAll({}).then(function (results) {
+      res.render("homePage", { results: results });
+
+    });
+  });
+
+
+  app.get("/home", function (req, res) {
     db.orders.findAll({}).then(function (results) {
       res.render("homePage", { results: results });
 
