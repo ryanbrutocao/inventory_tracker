@@ -1,5 +1,5 @@
 body {
-  background-color: #d8d8d8;
+  background-color: #f4ebe8;
 }
 
 hr {
@@ -10,27 +10,47 @@ hr {
   background-color: #eee;
   color: #eee;
 }
-
+a {
+  color: rgb(211, 77, 0);
+}
+.btn-primary,
+.btn-link {
+  background-color: rgb(30, 0, 126);
+  border: none;
+}
+/* a:hover {
+  background-color: yellow;
+} */
+.btn:hover {
+  background-color: rgb(30, 0, 126);
+}
 hr {
   height: 0px;
   border: none;
   border-top: 1px solid grey;
 }
-
 /************************** Header and Nav ************************/
-  .navbar-brand.title{
-    border-radius: 3%;
-    border: 3px gray solid;
-    border-style: ridge;
-  }
-  .list-group-item {
-    line-height: 2.5;
-  }
-
-  .title {
+.navbar {
+  background-color: #36546d;
+}
+.navbar-brand.title {
+  /* border-radius: 3%; */
+  border: 3px rgb(255, 196, 0) solid;
+  border-style: ridge;
+}
+.list-group-item {
+  line-height: 2.5;
+}
+.boxShadow {
+  box-shadow: 0 1px 13px 2px rgba(128, 128, 128, 0.9);
+}
+.boxShadowLight {
+  box-shadow: 0 1px 13px 2px rgba(202, 202, 202, 0.503);
+}
+.title {
   height: 10%;
   width: 30%;
-  background-color: rgb(164, 30, 30);
+  background-color: #7f1000;
   display: inline-block;
   font-size: 3em;
   text-align: center;
@@ -38,43 +58,24 @@ hr {
   /* line-height: 150px; */
 }
 
-/* .nav {
-  display: inline-block;
-  width:100%;
-  /* margin: 0px; */
-  /* text-align: center; */
-/* } */
-
 .nav-container {
   text-align: center;
   display: inline-block;
   margin: auto;
-  
 }
-
-/* ul.nav {
-  margin: auto;
-  width: 900px;
-}
-
-li.nav-item {
-  display: inline-block;
-} */
 
 .nav-link {
   font-size: 20px;
-  color: rgb(164, 30, 30);
+  color: rgb(212, 212, 212);
 }
 
-/************************Sales Chard Display Area **************************************/
-#myDiv{
-  margin: 10% 20%;
-  text-align: center;
-  display: inline-block;
+/************************Sales Chart Display Area **************************************/
+#myDiv {
   margin: auto;
-  
+  /* border: 2px solid red; */
+  display: flex;
+  justify-content: center;
 }
-
 
 /************************Table Area **************************************/
 
@@ -95,7 +96,6 @@ li.nav-item {
 }
 
 /*******************************Input Area *********************************/
-
 
 .sec {
   text-align: center;
@@ -118,11 +118,11 @@ div.jumbotron {
   text-align: center;
 }
 .btn.btn-primary {
-  margin:0% 2%;
+  margin: 0% 2%;
 }
 .mb-3 {
   width: 25%;
-  /* text-align: left; */ 
+  /* text-align: left; */
   margin-left: 3%;
   /* margin: auto; */
 }
@@ -132,22 +132,8 @@ div.jumbotron {
 .add-wine-label {
   /* margin: auto; */
   display: block;
-margin-bottom: 1%;
+  margin-bottom: 1%;
 }
-
-/* .wi {
-  height: 60px;
-} */
-
-/* #newWineInput {
-  text-align: center;
-} */
-/* 
-#addNewWine {
-  position: relative;
-  left: 300px;
-  bottom: 180px;
-} */
 
 /***Boxes Table****/
 table.table-striped.table-dark.new-table {
@@ -155,20 +141,14 @@ table.table-striped.table-dark.new-table {
 }
 
 table.table-striped.table-dark.box-table {
-  margin:0% 1%;
+  margin: 0% 1%;
   margin: auto;
-  width: 50%
+  width: 50%;
 }
 #boxBtn {
-  margin-left:9%;
+  margin-left: 9%;
 }
 /* 
-.box-table {
-  width: 500px;
-  margin: auto;
-  margin-bottom: 80px;
-  margin-top: 60px;
-} */
 
 /***Boxes Inputs *****/
 
@@ -177,81 +157,45 @@ table.table-striped.table-dark.box-table {
   margin-bottom: 60px;
 }
 
-/* #additionalBoxes {
-  position: relative;
-  left: 300px;
-  bottom: 120px;
-} */
-/* 
-.spec {
-  margin-bottom: 30px;
-} */
-
-
-/**********************Customer View Page*********************************/
-
-/*****Select Customer*****/
-
-/* .customer-select {
-  margin-bottom: 100px;
-} */
-
-/*******Add New Customer*******/
-
-/* .add-cust {
-margin: 5% 0%;
-} */
-
 #addNewCustomer {
   height: 50px;
 }
 
-.plus {
+/* .plus {
   font-size: 50px;
   position: relative;
   top: 10px;
-  color:rgb(164, 30, 30);
-}
+  color: rgb(164, 30, 30);
+} */
 
 /*****Customer Info and Notes*****/
 
 .customer-info {
- 
   text-align: center;
 }
 
-#clientNotes.form-control{
-
+#clientNotes.form-control {
   width: 95%;
 }
 .client-notes {
   margin-left: 3%;
   width: 100%;
-  /* text-align: center; */
   display: inline-block;
-  /* margin-left: 200px;
-  margin-top: 50px; */
-  
 }
 
 .client-card {
   width: 90%;
-  /* height: 200px; */ 
-  /* display: inline-block; */
-  
 }
 
 .notes {
-  width:90%;
+  width: 90%;
   font-size: 24px;
   text-decoration: underline;
-  /* margin-bottom: 20px; */
 }
 
 #clientNotes {
   width: 500px;
-  /* display: block;
-  margin: auto; */
+
   height: 200px;
 }
 

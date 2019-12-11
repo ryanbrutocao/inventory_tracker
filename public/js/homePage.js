@@ -6,7 +6,7 @@ $(document).ready(function () {
     success: handleData
   })
 });
-function handleData (data) {
+function handleData(data) {
   console.log("data: ", data);
   var basket = []
   for (i = 0; i < data.length; i++) {
@@ -21,7 +21,7 @@ function handleData (data) {
   postData(basket)
 }
 
-var basket=[];
+var basket = [];
 function sortAndDisplay(varietal, ordered, yearOrdered) {
 
   if ((yearOrdered = "2019")) {
@@ -147,7 +147,7 @@ function cab(data) {
 
 zebra = [19, 2, 22, 14, 16, 19, 15];
 console.log("Zebra: ", zebra);
-function postData(basket){
+function postData(basket) {
   var totalSales2019 = {
     x: [
       "Sauvignon Blanc",
@@ -166,17 +166,24 @@ function postData(basket){
       opacity: 0.5
     }
   };
-  
+
   var data = [totalSales2019];
-  
+
   var layout = {
     title: "Yearly Sales by Varietal",
     xaxis: {
+      automargin: true,
       tickangle: -45
     },
-    barmode: "group"
+    barmode: "group",
+    autosize: true,
+    // width: 500,
+    height: 400,
+    yaxis: {
+      automargin: true
+    }
   };
-  
+
   Plotly.newPlot("myDiv", data, layout);
 
 }
